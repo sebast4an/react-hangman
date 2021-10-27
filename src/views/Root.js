@@ -1,15 +1,15 @@
 import React from 'react';
-import FirstComponent from 'components/FirstComponent/FirstComponent';
 import { ThemeProvider } from 'styled-components';
 import { GlobalStyle } from 'assets/styles/GlobalStyle';
 import { theme } from 'assets/styles/theme';
 import { Wrapper } from './Root.styles';
+import MainTemplate from 'components/templates/MainTemplate';
 
 const Root = () => (
   <ThemeProvider theme={theme}>
     <GlobalStyle />
     <Wrapper>
-      <FirstComponent />
+      <MainTemplate />
     </Wrapper>
   </ThemeProvider>
 );
