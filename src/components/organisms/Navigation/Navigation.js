@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 // import PropTypes from 'prop-types';
-import { Nav, Header, HamburgerButton, List, ListElement } from './Navigation.styles';
+import { Nav, Header, HamburgerButton, List, ListElement, StyledLink } from './Navigation.styles';
 
 const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -17,13 +17,13 @@ const Navigation = () => {
       {isOpen ? (
         <List>
           <ListElement>
-            <a> New game </a>
+            <StyledLink to="/"> New game </StyledLink>
           </ListElement>
           <ListElement>
-            <a> About project </a>
+            <StyledLink to="/"> About project </StyledLink>
           </ListElement>
           <ListElement>
-            <a> Repository </a>
+            <StyledLink to="/"> Repository </StyledLink>
           </ListElement>
         </List>
       ) : null}

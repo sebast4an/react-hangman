@@ -4,6 +4,7 @@ export const theme = {
     lightBlack: '#2e3039',
     white: '#ffffff',
     red: '#c62828',
+    grey: '#6e717c',
   },
   fontSize: {
     xl: '2.6rem',

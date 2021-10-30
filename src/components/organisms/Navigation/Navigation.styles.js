@@ -130,3 +130,5 @@ export const ListElement = styled.li`
   margin: 0 1rem 0 1rem;
   font-size: ${({ theme }) => theme.fontSize.s};
 `;
+
+export const StyledLink = styled.a``;

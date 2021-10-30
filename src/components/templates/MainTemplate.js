@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import Navigation from 'components/organisms/Navigation/Navigation';
+import GameBoard from 'components/organisms/GameBoard/GameBoard';
 
 const Wrapper = styled.div`
   width: 100%;
@@ -10,11 +11,11 @@ const Wrapper = styled.div`
   justify-content: center;
 `;
 
-const MainTemplate = ({ children }) => {
+const MainTemplate = () => {
   return (
     <Wrapper>
       <Navigation />
-      {children}
+      <GameBoard />
     </Wrapper>
   );
 };
