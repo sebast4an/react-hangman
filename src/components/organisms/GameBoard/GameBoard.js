@@ -1,6 +1,8 @@
 import React from 'react';
-import { Board, Hangman, Counters, Image, Word } from './Gameboard.styles';
+import { Board, Hangman, Counters } from './Gameboard.styles';
 import Keyboard from '../Keyboard/Keyboard';
+import StagePictures from 'components/atoms/StagePictures/StagePictures';
+import Words from 'components/molecules/Words/Words';
 
 const GameBoard = () => {
   return (
@@ -11,8 +13,8 @@ const GameBoard = () => {
           <p>Wrong: 1</p>
         </Counters>
       </Hangman>
-      <Image />
-      <Word>se__s__a_</Word>
+      <StagePictures />
+      <Words />
       <Keyboard />
     </Board>
   );

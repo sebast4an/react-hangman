@@ -18,16 +18,3 @@ export const Counters = styled.div`
   justify-content: space-between;
   align-items: center;
 `;
-
-export const Image = styled.img`
-  padding: 1px;
-  height: 150px;
-  background-color: ${({ theme }) => theme.colors.red};
-  width: 100%;
-`;
-
-export const Word = styled.p`
-  font-size: ${({ theme }) => theme.fontSize.m};
-  letter-spacing: 5px;
-  text-align: center;
-`;
