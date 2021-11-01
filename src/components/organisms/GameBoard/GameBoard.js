@@ -1,6 +1,6 @@
 import React from 'react';
 import { Board, Hangman, Counters } from './Gameboard.styles';
-import Keyboard from '../Keyboard/Keyboard';
+import Keyboard from '../../molecules/Keyboard/Keyboard';
 import StagePictures from 'components/atoms/StagePictures/StagePictures';
 import Words from 'components/molecules/Words/Words';
 

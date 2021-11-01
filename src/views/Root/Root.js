@@ -4,12 +4,26 @@ import { GlobalStyle } from 'assets/styles/GlobalStyle';
 import { theme } from 'assets/styles/theme';
 import { Wrapper } from './Root.styles';
 import MainTemplate from 'components/templates/MainTemplate';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import Game from 'views/Game';
+import MainPage from 'views/MainPage';
 
 const Root = () => (
   <ThemeProvider theme={theme}>
     <GlobalStyle />
     <Wrapper>
-      <MainTemplate />
+      <Router>
+        <MainTemplate>
+          <Switch>
+            <Route path="/game">
+              <Game />
+            </Route>
+            <Route path="/">
+              <MainPage />
+            </Route>
+          </Switch>
+        </MainTemplate>
+      </Router>
     </Wrapper>
   </ThemeProvider>
 );

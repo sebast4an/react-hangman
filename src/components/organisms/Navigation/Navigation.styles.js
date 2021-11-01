@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { NavLink } from 'react-router-dom';
 
 export const Nav = styled.nav`
   position: fixed;
@@ -131,4 +132,7 @@ export const ListElement = styled.li`
   font-size: ${({ theme }) => theme.fontSize.s};
 `;
 
-export const StyledLink = styled.a``;
+export const StyledLink = styled(NavLink)`
+  text-decoration: none;
+  color: ${({ theme }) => theme.colors.white};
+`;
