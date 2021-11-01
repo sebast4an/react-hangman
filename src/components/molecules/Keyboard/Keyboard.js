@@ -1,5 +1,6 @@
 import React from 'react';
-import { Buttons, Button } from './Keyboard.styles';
+import { Buttons } from './Keyboard.styles';
+import KeyboardButton from 'components/atoms/KeyboardButton/KeyboardButton';
 
 const quertyKeyboard = [
   ['q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p'],
@@ -11,7 +12,7 @@ const Keyboard = () =>
   quertyKeyboard.map((keyboard, index) => (
     <Buttons key={index}>
       {keyboard.map(keyValue => (
-        <Button key={keyValue}>{keyValue}</Button>
+        <KeyboardButton key={keyValue}>{keyValue}</KeyboardButton>
       ))}
     </Buttons>
   ));
