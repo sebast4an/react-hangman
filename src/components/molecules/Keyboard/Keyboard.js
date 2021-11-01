@@ -8,11 +8,13 @@ const quertyKeyboard = [
   ['z', 'x', 'c', 'v', 'b', 'n', 'm'],
 ];
 
-const Keyboard = () =>
+const Keyboard = ({ quessWord }) =>
   quertyKeyboard.map((keyboard, index) => (
     <Buttons key={index}>
       {keyboard.map(keyValue => (
-        <KeyboardButton key={keyValue}>{keyValue}</KeyboardButton>
+        <KeyboardButton quessWord={quessWord} key={keyValue}>
+          {keyValue}
+        </KeyboardButton>
       ))}
     </Buttons>
   ));
