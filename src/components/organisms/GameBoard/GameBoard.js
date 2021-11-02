@@ -22,6 +22,21 @@ const GameBoard = () => {
     setHiddenWord(hidden);
   };
 
+  const handleSolution = e => {
+    const clikedButton = e.target;
+    const clikedValue = clikedButton.innerText.toLowerCase();
+
+    if (quessWord.indexOf(clikedValue) !== -1) {
+      clikedButton.setAttribute('disabled', '');
+      const occurrenceTable = quessWord.flatMap((searched, index) => (searched === clikedValue ? index : []));
+      const copyState = [...hiddenWord];
+      occurrenceTable.forEach(number => {
+        copyState[number] = clikedValue;
+      });
+      setHiddenWord(copyState);
+    } else console.log('nie znaleziony Panie generale');
+  };
+
   useEffect(() => {
     startGame();
   }, []);
@@ -36,7 +51,7 @@ const GameBoard = () => {
       </Hangman>
       <StagePictures />
       <Words>{hiddenWord}</Words>
-      <Keyboard quessWord={quessWord} />
+      <Keyboard quessWord={quessWord} handleSolution={handleSolution} />
     </Board>
   );
 };
