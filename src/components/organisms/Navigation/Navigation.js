@@ -17,7 +17,7 @@ const Navigation = () => {
       {isOpen ? (
         <List>
           <ListElement>
-            <StyledLink to="/"> New game </StyledLink>
+            <StyledLink to="/game"> Start game </StyledLink>
           </ListElement>
           <ListElement>
             <StyledLink to="/"> About project </StyledLink>
