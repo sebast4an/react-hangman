@@ -4,7 +4,8 @@ import Navigation from 'components/organisms/Navigation/Navigation';
 
 const Wrapper = styled.div`
   width: 100%;
-  height: 100vh;
+  min-height: 100vh;
+  height: auto;
   background-color: ${({ theme }) => theme.colors.black};
   display: flex;
   justify-content: center;

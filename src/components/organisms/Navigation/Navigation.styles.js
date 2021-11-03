@@ -113,14 +113,14 @@ export const List = styled.ul`
   padding: 0;
   margin: 0;
   position: absolute;
-  top: -15px;
+  top: -10px;
   left: -10px;
   display: flex;
   flex-flow: column wrap;
   justify-content: center;
   align-items: center;
   align-content: center;
-  background-color: rgba(0, 0, 0, 0.85);
+  background-color: rgba(0, 0, 0, 0.95);
   width: 100vw;
   height: 100vh;
   animation: opacityAnimate 0.5s ease-in-out;
@@ -134,5 +134,10 @@ export const ListElement = styled.li`
 
 export const StyledLink = styled(NavLink)`
   text-decoration: none;
-  color: ${({ theme }) => theme.colors.white};
+  color: ${({ theme }) => theme.colors.grey};
+
+  &.active-link {
+    font-weight: ${({ theme }) => theme.fontWeight.bold};
+    color: ${({ theme }) => theme.colors.white};
+  }
 `;
