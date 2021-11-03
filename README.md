@@ -1,24 +1,5 @@
-# <img width="70" height="70" src="https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg"> React boilerplate
-My boilerplate for react with configurated styled-components for CSS in JS. ESlint & Prettier for code analysis and format. Husky & lint-staged for run prettier before commit. An absolute import for src folder in default.
-
-## :floppy_disk: Installation:
-Clone this repository and install by typing:
-``` bash
-npm i
-```
-
-## :computer: Using:
-
-Development server:
-``` bash
-npm start
-```
-
-Format all files by prettier:
-``` bash
-npm run format
-```
-
+# React Hangman Game
+Project currently in development  ⚠️
 
 ## :abcd: Configured:
 
