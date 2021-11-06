@@ -11,6 +11,11 @@ const Images = styled.div`
     width: auto;
 
     .stage {
+      display: none;
+    }
+
+    .stage__1 {
+      display: block;
       fill: ${({ theme }) => theme.colors.grey};
     }
 
