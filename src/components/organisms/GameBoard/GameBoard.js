@@ -19,8 +19,8 @@ const GameBoard = () => {
     setGameState({
       fullWord,
       hiddenWord,
-      counter: 0,
       mistakes: 0,
+      moves: 0,
     });
   };
 
@@ -38,14 +38,14 @@ const GameBoard = () => {
 
       setGameState({
         ...gameState,
-        counter: gameState.counter + 1,
         hiddenWord: copyHiddenState,
+        moves: gameState.moves + 1,
       });
     } else {
       setGameState({
         ...gameState,
-        counter: gameState.counter + 1,
         mistakes: gameState.mistakes + 1,
+        moves: gameState.moves + 1,
       });
     }
   };
@@ -58,11 +58,11 @@ const GameBoard = () => {
     <Board>
       <Hangman>
         <Counters>
-          <p>Attempt: {gameState.counter} / 10</p>
-          <p>Mistakes: {gameState.mistakes} </p>
+          <p>Mistakes: {gameState.mistakes} / 10</p>
+          <p>Moves: {gameState.moves} </p>
         </Counters>
       </Hangman>
-      <StagePictures numberStage={gameState.mistakes} />
+      <StagePictures numberstage={gameState.mistakes} />
       <Words>{gameState.hiddenWord}</Words>
       <Keyboard handleButtons={handleButtons} />
     </Board>
