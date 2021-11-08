@@ -13,7 +13,7 @@ const HangmanImage = styled(HangmanSVG)`
 
   .stage {
     opacity: 0;
-    transition: opacity 0.4s ease;
+    transition: opacity 0.5s ease;
 
     &:nth-child(-n + ${({ numberstage }) => numberstage}) {
       opacity: 1;

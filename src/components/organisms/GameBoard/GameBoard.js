@@ -7,8 +7,15 @@ import Words from 'components/molecules/Words/Words';
 const words = ['github', 'sebastian'];
 const randomNumber = (min, max) => Math.floor(Math.random() * (max - min + 1) + min);
 
+const initialState = {
+  fullWord: [],
+  hiddenWord: [],
+  mistakes: 0,
+  moves: 0,
+};
+
 const GameBoard = () => {
-  const [gameState, setGameState] = useState('');
+  const [gameState, setGameState] = useState(initialState);
 
   const startGame = () => {
     const number = randomNumber(0, words.length - 1);
@@ -54,11 +61,22 @@ const GameBoard = () => {
     startGame();
   }, []);
 
+  useEffect(() => {
+    const fullWord = gameState.fullWord.join('');
+    const hiddenWord = gameState.hiddenWord.join('');
+    const moves = gameState.moves;
+
+    if (moves > 0) {
+      if (fullWord === hiddenWord) console.log('good!');
+      if (gameState.mistakes === 14) console.log('Gameover!');
+    }
+  }, [gameState]);
+
   return (
     <Board>
       <Hangman>
         <Counters>
-          <p>Mistakes: {gameState.mistakes} / 10</p>
+          <p>Mistakes: {gameState.mistakes} / 14</p>
           <p>Moves: {gameState.moves} </p>
         </Counters>
       </Hangman>
