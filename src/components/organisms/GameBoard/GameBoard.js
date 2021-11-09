@@ -1,8 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { Board, Hangman, Counters } from './Gameboard.styles';
+import { Board, Hangman, Counters, NewGamePanel, DefaultButton } from './Gameboard.styles';
 import Keyboard from '../../molecules/Keyboard/Keyboard';
 import StagePictures from 'components/atoms/StagePictures/StagePictures';
 import Words from 'components/molecules/Words/Words';
+import { Title } from 'components/atoms/Title/Title';
+import { StyledList, StyledListElement } from 'components/atoms/StyledList/StyledList';
+import { Line } from 'components/atoms/Line/Line';
+import { StyledParagraph } from 'components/atoms/StyledParagraph/StyledParagraph';
 
 const words = ['github', 'sebastian'];
 const randomNumber = (min, max) => Math.floor(Math.random() * (max - min + 1) + min);
@@ -12,10 +16,12 @@ const initialState = {
   hiddenWord: [],
   mistakes: 0,
   moves: 0,
+  result: '',
 };
 
 const GameBoard = () => {
   const [gameState, setGameState] = useState(initialState);
+  const [gameStarted, setGameStarted] = useState(false);
 
   const startGame = () => {
     const number = randomNumber(0, words.length - 1);
@@ -28,7 +34,10 @@ const GameBoard = () => {
       hiddenWord,
       mistakes: 0,
       moves: 0,
+      result: '',
     });
+
+    setGameStarted(true); //TODO: change !!!!!!
   };
 
   const handleButtons = e => {
@@ -67,22 +76,46 @@ const GameBoard = () => {
     const moves = gameState.moves;
 
     if (moves > 0) {
-      if (fullWord === hiddenWord) console.log('good!');
-      if (gameState.mistakes === 14) console.log('Gameover!');
+      if (fullWord === hiddenWord) {
+        setGameStarted(false);
+      }
+      if (gameState.mistakes === 14) {
+        setGameStarted(false);
+      }
     }
-  }, [gameState]);
+  }, [gameStarted, gameState]);
 
   return (
     <Board>
-      <Hangman>
-        <Counters>
-          <p>Mistakes: {gameState.mistakes} / 14</p>
-          <p>Moves: {gameState.moves} </p>
-        </Counters>
-      </Hangman>
-      <StagePictures numberstage={gameState.mistakes} />
-      <Words>{gameState.hiddenWord}</Words>
-      <Keyboard handleButtons={handleButtons} />
+      {gameStarted ? (
+        <>
+          <Hangman>
+            <Counters>
+              <p>Mistakes: {gameState.mistakes} / 14</p>
+              <p>Moves: {gameState.moves} </p>
+            </Counters>
+          </Hangman>
+          <StagePictures numberstage={gameState.mistakes} />
+          <Words>{gameState.hiddenWord}</Words>
+          <Keyboard handleButtons={handleButtons} />
+        </>
+      ) : (
+        <>
+          <NewGamePanel>
+            <Title>{gameState.result}</Title>
+            <Line />
+            <Title>Statistics:</Title>
+            <StyledList>
+              <StyledListElement>Mistakes: {gameState.mistakes}</StyledListElement>
+              <StyledListElement>Moves: {gameState.moves}</StyledListElement>
+            </StyledList>
+            <Line />
+            <Title>Word:</Title>
+            <StyledParagraph>{gameState.fullWord}</StyledParagraph>
+            <DefaultButton onClick={startGame}>Start game</DefaultButton>
+          </NewGamePanel>
+        </>
+      )}
     </Board>
   );
 };

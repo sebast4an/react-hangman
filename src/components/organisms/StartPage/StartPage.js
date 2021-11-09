@@ -20,7 +20,7 @@ const StartPage = () => (
     <StyledParagraph>It is Game build in React, all words are fetch from API.</StyledParagraph>
     <StyledLink to="/game">Start Game!</StyledLink>
     <Title>Rules: </Title>
-    <StyledParagraph>You have 10 tries</StyledParagraph>
+    <StyledParagraph>You have 14 tries</StyledParagraph>
     <Title>Technologies used to build this game:</Title>
     <StyledList>
       <StyledListElement>React with React Router and React Context</StyledListElement>
