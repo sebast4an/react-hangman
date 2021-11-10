@@ -45,3 +45,11 @@ export const DefaultButton = styled.button`
     border: 2px solid ${({ theme }) => theme.colors.white};
   }
 `;
+
+export const Image = styled.img`
+  max-width: 200px;
+  height: auto;
+  margin: 10px 0;
+  border-radius: 10px;
+  display: flex;
+`;

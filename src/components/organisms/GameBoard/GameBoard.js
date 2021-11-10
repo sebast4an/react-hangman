@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Board, Hangman, Counters, NewGamePanel, DefaultButton } from './Gameboard.styles';
+import { Board, Hangman, Counters, NewGamePanel, DefaultButton, Image } from './Gameboard.styles';
 import Keyboard from '../../molecules/Keyboard/Keyboard';
 import StagePictures from 'components/atoms/StagePictures/StagePictures';
 import Words from 'components/molecules/Words/Words';
@@ -7,6 +7,7 @@ import { Title } from 'components/atoms/Title/Title';
 import { StyledList, StyledListElement } from 'components/atoms/StyledList/StyledList';
 import { Line } from 'components/atoms/Line/Line';
 import { StyledParagraph } from 'components/atoms/StyledParagraph/StyledParagraph';
+import winnerIMG from 'assets/img/cat_winner.jpg';
 
 const words = ['github', 'sebastian'];
 const randomNumber = (min, max) => Math.floor(Math.random() * (max - min + 1) + min);
@@ -16,12 +17,16 @@ const initialState = {
   hiddenWord: [],
   mistakes: 0,
   moves: 0,
+};
+
+const initialGame = {
+  started: false,
   result: '',
 };
 
 const GameBoard = () => {
   const [gameState, setGameState] = useState(initialState);
-  const [gameStarted, setGameStarted] = useState(false);
+  const [game, setGame] = useState(initialGame);
 
   const startGame = () => {
     const number = randomNumber(0, words.length - 1);
@@ -34,10 +39,12 @@ const GameBoard = () => {
       hiddenWord,
       mistakes: 0,
       moves: 0,
-      result: '',
     });
 
-    setGameStarted(true); //TODO: change !!!!!!
+    setGame({
+      started: true,
+      result: '',
+    });
   };
 
   const handleButtons = e => {
@@ -77,17 +84,23 @@ const GameBoard = () => {
 
     if (moves > 0) {
       if (fullWord === hiddenWord) {
-        setGameStarted(false);
+        setGame({
+          started: false,
+          result: 'You Win!',
+        });
       }
       if (gameState.mistakes === 14) {
-        setGameStarted(false);
+        setGame({
+          started: false,
+          result: 'You Win!',
+        });
       }
     }
-  }, [gameStarted, gameState]);
+  }, [gameState]);
 
   return (
     <Board>
-      {gameStarted ? (
+      {game.started ? (
         <>
           <Hangman>
             <Counters>
@@ -102,14 +115,14 @@ const GameBoard = () => {
       ) : (
         <>
           <NewGamePanel>
-            <Title>{gameState.result}</Title>
+            <Title>{game.result}</Title>
+            <Image src={winnerIMG} />
             <Line />
             <Title>Statistics:</Title>
             <StyledList>
               <StyledListElement>Mistakes: {gameState.mistakes}</StyledListElement>
               <StyledListElement>Moves: {gameState.moves}</StyledListElement>
             </StyledList>
-            <Line />
             <Title>Word:</Title>
             <StyledParagraph>{gameState.fullWord}</StyledParagraph>
             <DefaultButton onClick={startGame}>Start game</DefaultButton>
