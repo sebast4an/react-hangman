@@ -17,29 +17,11 @@ const StyledLink = styled(Link)`
   max-width: max-content;
   padding: 1rem;
   border-radius: 10px;
-  position: relative;
-  overflow: hidden;
-
-  &::before {
-    position: absolute;
-    content: 'Ready? 😼';
-    inset: 100% 0 0 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    height: 100%;
-    background-color: ${({ theme }) => theme.colors.lightBlack};
-    color: ${({ theme }) => theme.colors.white};
-    transition: transform 0.3s ease-in-out;
-    border-radius: 10px;
-  }
+  transition: background 0.3s ease, color 0.2s ease;
 
   &:hover {
-    &::before {
-      transform: translateY(-100%);
-      z-index: 2;
-    }
+    background-color: ${({ theme }) => theme.colors.lightBlack};
+    color: ${({ theme }) => theme.colors.grey};
   }
 `;
 
