@@ -1,16 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { Board, Hangman, Counters, NewGamePanel, DefaultButton, Image } from './Gameboard.styles';
-import Keyboard from '../../molecules/Keyboard/Keyboard';
-import StagePictures from 'components/atoms/StagePictures/StagePictures';
-import Words from 'components/molecules/Words/Words';
-import { Title } from 'components/atoms/Title/Title';
-import { StyledList, StyledListElement } from 'components/atoms/StyledList/StyledList';
-import { Line } from 'components/atoms/Line/Line';
-import { StyledParagraph } from 'components/atoms/StyledParagraph/StyledParagraph';
-import winnerIMG from 'assets/img/cat_winner.jpg';
+import { Board } from './Gameboard.styles';
+import GameRunning from '../GameRunning/GameRunning';
+import NewGame from '../NewGame/NewGame';
+import { checkInLocalStorage } from 'helpers/localStorage';
+import { randomNumber } from 'helpers/general';
 
 const words = ['github', 'sebastian'];
-const randomNumber = (min, max) => Math.floor(Math.random() * (max - min + 1) + min);
 
 const initialState = {
   fullWord: [],
@@ -29,7 +24,7 @@ const GameBoard = () => {
   const [game, setGame] = useState(initialGame);
 
   const startGame = () => {
-    const number = randomNumber(0, words.length - 1);
+    const number = randomNumber(words.length - 1);
     const fullWord = [...words[number]];
     const hiddenWord = new Array(fullWord.length);
     hiddenWord.fill('_', 0);
@@ -47,21 +42,17 @@ const GameBoard = () => {
     });
   };
 
-  const handleButtons = e => {
-    const fullWordState = gameState.fullWord;
-    const clikedButton = e.target;
-    const clikedButtonValue = clikedButton.innerText.toLowerCase();
-
+  const checkCliked = (fullWordState, clikedButton, clikedButtonValue) => {
     if (fullWordState.indexOf(clikedButtonValue) > -1) {
       clikedButton.setAttribute('disabled', '');
 
-      const copyHiddenState = [...gameState.hiddenWord];
+      const copyHiddenWord = [...gameState.hiddenWord];
       const lettersIndex = fullWordState.flatMap((searched, index) => (searched === clikedButtonValue ? index : []));
-      lettersIndex.forEach(number => (copyHiddenState[number] = clikedButtonValue));
+      lettersIndex.forEach(number => (copyHiddenWord[number] = clikedButtonValue));
 
       setGameState({
         ...gameState,
-        hiddenWord: copyHiddenState,
+        hiddenWord: copyHiddenWord,
         moves: gameState.moves + 1,
       });
     } else {
@@ -71,6 +62,14 @@ const GameBoard = () => {
         moves: gameState.moves + 1,
       });
     }
+  };
+
+  const handleButtons = e => {
+    const fullWordState = gameState.fullWord;
+    const clikedButton = e.target;
+    const clikedButtonValue = clikedButton.innerText.toLowerCase();
+
+    checkCliked(fullWordState, clikedButton, clikedButtonValue);
   };
 
   useEffect(() => {
@@ -92,45 +91,23 @@ const GameBoard = () => {
       if (gameState.mistakes === 14) {
         setGame({
           started: false,
-          result: 'You Win!',
+          result: 'You Lost!',
         });
       }
     }
   }, [gameState]);
 
-  return (
-    <Board>
-      {game.started ? (
-        <>
-          <Hangman>
-            <Counters>
-              <p>Mistakes: {gameState.mistakes} / 14</p>
-              <p>Moves: {gameState.moves} </p>
-            </Counters>
-          </Hangman>
-          <StagePictures numberstage={gameState.mistakes} />
-          <Words>{gameState.hiddenWord}</Words>
-          <Keyboard handleButtons={handleButtons} />
-        </>
-      ) : (
-        <>
-          <NewGamePanel>
-            <Title>{game.result}</Title>
-            <Image src={winnerIMG} />
-            <Line />
-            <Title>Statistics:</Title>
-            <StyledList>
-              <StyledListElement>Mistakes: {gameState.mistakes}</StyledListElement>
-              <StyledListElement>Moves: {gameState.moves}</StyledListElement>
-            </StyledList>
-            <Title>Word:</Title>
-            <StyledParagraph>{gameState.fullWord}</StyledParagraph>
-            <DefaultButton onClick={startGame}>Start game</DefaultButton>
-          </NewGamePanel>
-        </>
-      )}
-    </Board>
-  );
+  checkInLocalStorage('testowy');
+
+  const switchGame = state => {
+    if (state) {
+      return <GameRunning gameState={gameState} handleButtons={handleButtons} />;
+    } else {
+      return <NewGame game={game} gameState={gameState} startGame={startGame} />;
+    }
+  };
+
+  return <Board>{switchGame(game.started)}</Board>;
 };
 
 export default GameBoard;

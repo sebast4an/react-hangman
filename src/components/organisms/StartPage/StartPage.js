@@ -23,6 +23,10 @@ const StyledLink = styled(Link)`
     background-color: ${({ theme }) => theme.colors.lightBlack};
     color: ${({ theme }) => theme.colors.grey};
   }
+
+  &:focus-visible {
+    outline: 3px solid ${({ theme }) => theme.colors.grey};
+  }
 `;
 
 const StartPage = () => (
