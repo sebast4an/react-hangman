@@ -1,41 +1,75 @@
 import React, { useEffect, useState } from 'react';
-import { Board, Hangman, Counters } from './Gameboard.styles';
-import Keyboard from '../../molecules/Keyboard/Keyboard';
-import StagePictures from 'components/atoms/StagePictures/StagePictures';
-import Words from 'components/molecules/Words/Words';
+import { Board } from './Gameboard.styles';
+import GameRunning from '../GameRunning/GameRunning';
+import NewGame from '../NewGame/NewGame';
+import { checkInLocalStorage } from 'helpers/localStorage';
+import { randomNumber } from 'helpers/general';
 
-const words = ['github'];
-const randomNumber = (min, max) => Math.floor(Math.random() * (max - min + 1) + min);
+const words = ['github', 'sebastian'];
+
+const initialState = {
+  fullWord: [],
+  hiddenWord: [],
+  mistakes: 0,
+  moves: 0,
+};
+
+const initialGame = {
+  started: false,
+  result: '',
+};
 
 const GameBoard = () => {
-  const [quessWord, setQuessWord] = useState([]);
-  const [hiddenWord, setHiddenWord] = useState([]);
-  const [counter, setCounter] = useState(0);
-  const [wrong, setWrong] = useState(0);
+  const [gameState, setGameState] = useState(initialState);
+  const [game, setGame] = useState(initialGame);
 
   const startGame = () => {
-    const number = randomNumber(0, words.length - 1);
-    const theWord = [...words[number]];
-    const hidden = new Array(theWord.length);
-    hidden.fill('_', 0);
-    setQuessWord(theWord);
-    setHiddenWord(hidden);
-    setCounter(0);
-    setWrong(0);
+    const number = randomNumber(words.length - 1);
+    const fullWord = [...words[number]];
+    const hiddenWord = new Array(fullWord.length);
+    hiddenWord.fill('_', 0);
+
+    setGameState({
+      fullWord,
+      hiddenWord,
+      mistakes: 0,
+      moves: 0,
+    });
+
+    setGame({
+      started: true,
+      result: '',
+    });
   };
 
-  const handleSolution = e => {
-    const clikedButton = e.target;
-    const clikedValue = clikedButton.innerText.toLowerCase();
-    setCounter(counter + 1);
-
-    if (quessWord.indexOf(clikedValue) !== -1) {
+  const checkCliked = (fullWordState, clikedButton, clikedButtonValue) => {
+    if (fullWordState.indexOf(clikedButtonValue) > -1) {
       clikedButton.setAttribute('disabled', '');
-      const occurrenceTable = quessWord.flatMap((searched, index) => (searched === clikedValue ? index : []));
-      const copyState = [...hiddenWord];
-      occurrenceTable.forEach(number => (copyState[number] = clikedValue));
-      setHiddenWord(copyState);
-    } else setWrong(wrong + 1);
+
+      const copyHiddenWord = [...gameState.hiddenWord];
+      const lettersIndex = fullWordState.flatMap((searched, index) => (searched === clikedButtonValue ? index : []));
+      lettersIndex.forEach(number => (copyHiddenWord[number] = clikedButtonValue));
+
+      setGameState({
+        ...gameState,
+        hiddenWord: copyHiddenWord,
+        moves: gameState.moves + 1,
+      });
+    } else {
+      setGameState({
+        ...gameState,
+        mistakes: gameState.mistakes + 1,
+        moves: gameState.moves + 1,
+      });
+    }
+  };
+
+  const handleButtons = e => {
+    const fullWordState = gameState.fullWord;
+    const clikedButton = e.target;
+    const clikedButtonValue = clikedButton.innerText.toLowerCase();
+
+    checkCliked(fullWordState, clikedButton, clikedButtonValue);
   };
 
   useEffect(() => {
@@ -43,27 +77,37 @@ const GameBoard = () => {
   }, []);
 
   useEffect(() => {
-    if (quessWord.join('') === hiddenWord.join('') && quessWord.length !== 0) console.log('done!');
-    if (counter === 10) {
-      console.log('GAMEOVER');
-      startGame();
-    }
-  }, [hiddenWord, quessWord, counter]);
+    const fullWord = gameState.fullWord.join('');
+    const hiddenWord = gameState.hiddenWord.join('');
+    const moves = gameState.moves;
 
-  return (
-    <Board>
-      <Hangman>
-        <Counters>
-          <p>Attempts: {counter} / 10</p>
-          <p>Wrong: {wrong}</p>
-        </Counters>
-      </Hangman>
-      <StagePictures />
-      <Words>{hiddenWord}</Words>
-      <Keyboard quessWord={quessWord} handleSolution={handleSolution} />
-      <button onClick={startGame}>New game?</button>
-    </Board>
-  );
+    if (moves > 0) {
+      if (fullWord === hiddenWord) {
+        setGame({
+          started: false,
+          result: 'You Win!',
+        });
+      }
+      if (gameState.mistakes === 14) {
+        setGame({
+          started: false,
+          result: 'You Lost!',
+        });
+      }
+    }
+  }, [gameState]);
+
+  checkInLocalStorage('testowy');
+
+  const switchGame = state => {
+    if (state) {
+      return <GameRunning gameState={gameState} handleButtons={handleButtons} />;
+    } else {
+      return <NewGame game={game} gameState={gameState} startGame={startGame} />;
+    }
+  };
+
+  return <Board>{switchGame(game.started)}</Board>;
 };
 
 export default GameBoard;

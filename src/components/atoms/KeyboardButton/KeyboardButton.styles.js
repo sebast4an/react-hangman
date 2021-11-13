@@ -21,4 +21,12 @@ export const Button = styled.button`
     background-color: ${({ theme }) => theme.colors.grey};
     color: ${({ theme }) => theme.colors.black};
   }
+
+  &:disabled {
+    background-color: ${({ theme }) => theme.colors.black};
+
+    &:hover {
+      color: ${({ theme }) => theme.colors.grey};
+    }
+  }
 `;
