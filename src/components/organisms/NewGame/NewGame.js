@@ -41,9 +41,9 @@ export const Image = styled.img`
   display: flex;
 `;
 
-const NewGame = ({ game, gameState, startGame }) => (
+const NewGame = ({ gameState, startGame }) => (
   <NewGamePanel>
-    <Title>{game.result}</Title>
+    <Title>{gameState.result}</Title>
     <Image src={winnerIMG} />
     <Line />
     <Title>Statistics:</Title>

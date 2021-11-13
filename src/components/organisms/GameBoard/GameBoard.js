@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { Board } from './Gameboard.styles';
 import GameRunning from '../GameRunning/GameRunning';
 import NewGame from '../NewGame/NewGame';
-import { checkInLocalStorage } from 'helpers/localStorage';
 import { randomNumber } from 'helpers/general';
 
 const words = ['github', 'sebastian'];
@@ -12,16 +11,12 @@ const initialState = {
   hiddenWord: [],
   mistakes: 0,
   moves: 0,
-};
-
-const initialGame = {
   started: false,
   result: '',
 };
 
 const GameBoard = () => {
   const [gameState, setGameState] = useState(initialState);
-  const [game, setGame] = useState(initialGame);
 
   const startGame = () => {
     const number = randomNumber(words.length - 1);
@@ -34,9 +29,6 @@ const GameBoard = () => {
       hiddenWord,
       mistakes: 0,
       moves: 0,
-    });
-
-    setGame({
       started: true,
       result: '',
     });
@@ -77,19 +69,20 @@ const GameBoard = () => {
   }, []);
 
   useEffect(() => {
-    const fullWord = gameState.fullWord.join('');
-    const hiddenWord = gameState.hiddenWord.join('');
-    const moves = gameState.moves;
+    if (gameState.started) {
+      const fullWord = gameState.fullWord.join('');
+      const hiddenWord = gameState.hiddenWord.join('');
 
-    if (moves > 0) {
       if (fullWord === hiddenWord) {
-        setGame({
+        setGameState({
+          ...gameState,
           started: false,
           result: 'You Win!',
         });
       }
       if (gameState.mistakes === 14) {
-        setGame({
+        setGameState({
+          ...gameState,
           started: false,
           result: 'You Lost!',
         });
@@ -97,17 +90,15 @@ const GameBoard = () => {
     }
   }, [gameState]);
 
-  checkInLocalStorage('testowy');
-
   const switchGame = state => {
     if (state) {
       return <GameRunning gameState={gameState} handleButtons={handleButtons} />;
     } else {
-      return <NewGame game={game} gameState={gameState} startGame={startGame} />;
+      return <NewGame gameState={gameState} startGame={startGame} />;
     }
   };
 
-  return <Board>{switchGame(game.started)}</Board>;
+  return <Board>{switchGame(gameState.started)}</Board>;
 };
 
 export default GameBoard;
