@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { ReactComponent as HangmanSVG } from 'assets/svg/hangman_stages.svg';
 
@@ -32,5 +33,9 @@ const StagePictures = ({ numberstage }) => {
       <HangmanImage numberstage={numberstage} />
     </Images>
   );
+};
+
+StagePictures.propTypes = {
+  numberstage: PropTypes.number.isRequired,
 };
 export default StagePictures;

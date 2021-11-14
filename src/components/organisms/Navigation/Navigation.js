@@ -1,6 +1,5 @@
-import { ClassicLink } from 'components/atoms/ClassicLink/ClassicLink';
 import React, { useState } from 'react';
-// import PropTypes from 'prop-types';
+import { ClassicLink } from 'components/atoms/ClassicLink/ClassicLink';
 import { Nav, Header, HamburgerButton, List, ListElement, StyledLink } from './Navigation.styles';
 
 const Navigation = () => {
@@ -41,5 +40,5 @@ const Navigation = () => {
     </Nav>
   );
 };
-// Navigation.propTypes = {};
+
 export default Navigation;

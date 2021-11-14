@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Buttons } from './Keyboard.styles';
 import KeyboardButton from 'components/atoms/KeyboardButton/KeyboardButton';
 
@@ -9,14 +10,18 @@ const quertyKeyboard = [
 ];
 
 const Keyboard = ({ quessWord, handleButtons }) =>
-  quertyKeyboard.map((keyboard, index) => (
-    <Buttons key={index}>
+  quertyKeyboard.map(keyboard => (
+    <Buttons key={keyboard}>
       {keyboard.map(keyValue => (
-        <KeyboardButton quessWord={quessWord} key={keyValue} handleButtons={handleButtons}>
+        <KeyboardButton quessWord={quessWord} key={keyValue} onClick={handleButtons}>
           {keyValue}
         </KeyboardButton>
       ))}
     </Buttons>
   ));
 
+Keyboard.propTypes = {
+  quessWord: PropTypes.string,
+  handleButtons: PropTypes.func,
+};
 export default Keyboard;

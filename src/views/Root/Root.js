@@ -7,6 +7,7 @@ import MainTemplate from 'components/templates/MainTemplate';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Game from 'views/Game';
 import MainPage from 'views/MainPage';
+import GameProvider from 'providers/GameProvider';
 
 const Root = () => (
   <ThemeProvider theme={theme}>
@@ -16,7 +17,9 @@ const Root = () => (
         <MainTemplate>
           <Switch>
             <Route path="/game">
-              <Game />
+              <GameProvider>
+                <Game />
+              </GameProvider>
             </Route>
             <Route path="/">
               <MainPage />

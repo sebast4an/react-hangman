@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 const Word = styled.p`
@@ -15,4 +16,7 @@ const Words = ({ children }) => {
   );
 };
 
+Words.propTypes = {
+  children: PropTypes.array.isRequired,
+};
 export default Words;

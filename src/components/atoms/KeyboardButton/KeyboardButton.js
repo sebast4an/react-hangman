@@ -1,13 +1,17 @@
 import React from 'react';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import { Button } from './KeyboardButton.styles';
-const KeyboardButton = ({ children, handleButtons }) => {
+
+const KeyboardButton = props => {
   return (
     <>
-      <Button onClick={handleButtons}>{children}</Button>
+      <Button {...props}>{props.children}</Button>
     </>
   );
 };
 
-// KeyboardButton.propTypes = {};
+KeyboardButton.propTypes = {
+  props: PropTypes.any,
+  children: PropTypes.string,
+};
 export default KeyboardButton;
