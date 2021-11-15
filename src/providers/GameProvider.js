@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { randomNumber } from 'helpers/general';
+import { loadFromLocalStorage, removeInLocalStorage, saveInLocalStorage } from 'helpers/localStorage';
+
+const words = ['github', 'sebastian'];
 
 export const GameContext = React.createContext({
   startGame: () => {},
@@ -8,15 +11,13 @@ export const GameContext = React.createContext({
   gameState: {},
 });
 
-const words = ['github', 'sebastian'];
-
 const initialState = {
   fullWord: [],
   hiddenWord: [],
   mistakes: 0,
   moves: 0,
   started: false,
-  result: '',
+  result: 0,
 };
 
 const GameProvider = ({ children }) => {
@@ -28,14 +29,25 @@ const GameProvider = ({ children }) => {
     const hiddenWord = new Array(fullWord.length);
     hiddenWord.fill('_', 0);
 
-    setGameState({
-      fullWord,
-      hiddenWord,
-      mistakes: 0,
-      moves: 0,
-      started: true,
-      result: '',
-    });
+    const checkLocalStorage = () => {
+      const data = loadFromLocalStorage('gameState');
+
+      if (data && data.result === 0) {
+        setGameState(data);
+        console.log('load success!');
+      } else {
+        setGameState({
+          fullWord,
+          hiddenWord,
+          mistakes: 0,
+          moves: 0,
+          started: true,
+          result: 0,
+        });
+      }
+    };
+
+    checkLocalStorage();
   };
 
   const checkCliked = (fullWordState, clikedButton, clikedButtonValue) => {
@@ -76,6 +88,7 @@ const GameProvider = ({ children }) => {
     if (gameState.started) {
       const fullWord = gameState.fullWord.join('');
       const hiddenWord = gameState.hiddenWord.join('');
+      saveInLocalStorage('gameState', gameState);
 
       if (fullWord === hiddenWord) {
         setGameState({
@@ -83,6 +96,8 @@ const GameProvider = ({ children }) => {
           started: false,
           result: 'You Win!',
         });
+        removeInLocalStorage('gameState');
+        removeInLocalStorage('disabledButtons');
       }
       if (gameState.mistakes === 14) {
         setGameState({
@@ -90,6 +105,8 @@ const GameProvider = ({ children }) => {
           started: false,
           result: 'You Lost!',
         });
+        removeInLocalStorage('gameState');
+        removeInLocalStorage('disabledButtons');
       }
     }
   }, [gameState]);
