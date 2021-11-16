@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect, useRef } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Buttons } from './Keyboard.styles';
 import KeyboardButton from 'components/atoms/KeyboardButton/KeyboardButton';
@@ -11,30 +11,26 @@ const quertyKeyboard = [
   ['z', 'x', 'c', 'v', 'b', 'n', 'm'],
 ];
 
+const initialState = [];
+
 const Keyboard = () => {
   const { handleButtons } = useContext(GameContext);
-  const [disabledButton, setDisabledButton] = useState([]);
+  const [disabledButton, setDisabledButton] = useState(initialState);
 
   const checkButtonsInLocalStorage = () => {
     const data = loadFromLocalStorage('disabledButtons');
 
     if (data) {
       setDisabledButton(data);
-      console.log(data);
-    }
-  };
-
-  //TODO: make listener for cliked buttons and add attrivbute 'disabled' for localStorage!
-  const checking = (key, state) => {
-    console.log(state.indexOf(key));
-    if (state.indexOf(key) > -1) {
-      return 'disabled';
-    } else return null;
+    } else return;
   };
 
   useEffect(() => {
-    checkButtonsInLocalStorage();
-  }, []);
+    console.log(disabledButton);
+    if (!disabledButton) {
+      checkButtonsInLocalStorage();
+    }
+  }, [disabledButton]);
 
   const handleDisabledButtons = e => {
     if (e.target.hasAttribute('disabled')) setDisabledButton(prevState => [...prevState, e.target.innerText]);
@@ -46,17 +42,23 @@ const Keyboard = () => {
 
   return quertyKeyboard.map(keyboard => (
     <Buttons key={keyboard}>
-      {keyboard.map(keyValue => (
-        <KeyboardButton
-          key={keyValue}
-          onClick={e => {
-            handleButtons(e);
-            handleDisabledButtons(e);
-          }}
-        >
-          {keyValue}
-        </KeyboardButton>
-      ))}
+      {keyboard.map(keyValue => {
+        if (disabledButton.indexOf(keyValue) > -1) {
+          console.log('works?');
+        }
+
+        return (
+          <KeyboardButton
+            key={keyValue}
+            onClick={e => {
+              handleButtons(e);
+              handleDisabledButtons(e);
+            }}
+          >
+            {keyValue}
+          </KeyboardButton>
+        );
+      })}
     </Buttons>
   ));
 };
