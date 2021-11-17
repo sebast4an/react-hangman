@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { randomNumber } from 'helpers/general';
-import { loadFromLocalStorage, removeInLocalStorage, saveInLocalStorage } from 'helpers/localStorage';
+import { loadFromLocalStorage, saveInLocalStorage } from 'helpers/localStorage';
 
+//TODO: Makes fetch data from API (graphQL)!
 const words = ['github', 'sebastian'];
 
 export const GameContext = React.createContext({
   startGame: () => {},
   checkCliked: () => {},
-  handleButtons: () => {},
+  handleClikedButtons: () => {},
   gameState: {},
 });
 
@@ -34,7 +35,6 @@ const GameProvider = ({ children }) => {
 
       if (data && data.result === 0) {
         setGameState(data);
-        console.log('load success!');
       } else {
         setGameState({
           fullWord,
@@ -51,16 +51,16 @@ const GameProvider = ({ children }) => {
   };
 
   const checkCliked = (fullWordState, clikedButton, clikedButtonValue) => {
-    if (fullWordState.indexOf(clikedButtonValue) > -1) {
-      clikedButton.setAttribute('disabled', '');
+    clikedButton.disabled = true;
 
-      const copyHiddenWord = [...gameState.hiddenWord];
+    if (fullWordState.indexOf(clikedButtonValue) > -1) {
+      const quessedLetters = [...gameState.hiddenWord];
       const lettersIndex = fullWordState.flatMap((searched, index) => (searched === clikedButtonValue ? index : []));
-      lettersIndex.forEach(number => (copyHiddenWord[number] = clikedButtonValue));
+      lettersIndex.forEach(number => (quessedLetters[number] = clikedButtonValue));
 
       setGameState({
         ...gameState,
-        hiddenWord: copyHiddenWord,
+        hiddenWord: quessedLetters,
         moves: gameState.moves + 1,
       });
     } else {
@@ -72,7 +72,7 @@ const GameProvider = ({ children }) => {
     }
   };
 
-  const handleButtons = e => {
+  const handleClikedButtons = e => {
     const fullWordState = gameState.fullWord;
     const clikedButton = e.target;
     const clikedButtonValue = clikedButton.innerText.toLowerCase();
@@ -88,6 +88,7 @@ const GameProvider = ({ children }) => {
     if (gameState.started) {
       const fullWord = gameState.fullWord.join('');
       const hiddenWord = gameState.hiddenWord.join('');
+
       saveInLocalStorage('gameState', gameState);
 
       if (fullWord === hiddenWord) {
@@ -96,8 +97,7 @@ const GameProvider = ({ children }) => {
           started: false,
           result: 'You Win!',
         });
-        removeInLocalStorage('gameState');
-        removeInLocalStorage('disabledButtons');
+        localStorage.clear();
       }
       if (gameState.mistakes === 14) {
         setGameState({
@@ -105,8 +105,7 @@ const GameProvider = ({ children }) => {
           started: false,
           result: 'You Lost!',
         });
-        removeInLocalStorage('gameState');
-        removeInLocalStorage('disabledButtons');
+        localStorage.clear();
       }
     }
   }, [gameState]);
@@ -117,7 +116,7 @@ const GameProvider = ({ children }) => {
         value={{
           startGame,
           checkCliked,
-          handleButtons,
+          handleClikedButtons,
           gameState,
         }}
       >
