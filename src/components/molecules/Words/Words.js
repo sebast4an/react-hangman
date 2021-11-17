@@ -1,11 +1,6 @@
 import React from 'react';
-import styled from 'styled-components';
-
-const Word = styled.p`
-  font-size: ${({ theme }) => theme.fontSize.m};
-  letter-spacing: 5px;
-  text-align: center;
-`;
+import PropTypes from 'prop-types';
+import { Word } from './Words.styles';
 
 const Words = ({ children }) => {
   return (
@@ -15,4 +10,7 @@ const Words = ({ children }) => {
   );
 };
 
+Words.propTypes = {
+  children: PropTypes.array.isRequired,
+};
 export default Words;

@@ -6,7 +6,7 @@
       "warn",
       {
         "singleQuote": true,
-        "printWidth": 150,
+        "printWidth": 160,
         "arrowParens": "avoid"
       }
     ]
