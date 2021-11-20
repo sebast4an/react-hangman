@@ -14,12 +14,14 @@ const quertyKeyboard = [
 ];
 
 const Keyboard = () => {
-  const { handleClikedButtons } = useContext(GameContext);
+  const { handleClikedButtons, gameState } = useContext(GameContext);
   const [disabledButtons, setDisabledButtons] = useState(initialState);
 
   const checkButtonsInLocalStorage = () => {
     const data = loadFromLocalStorage('disabledButtons');
+
     if (data) setDisabledButtons(data);
+    else setDisabledButtons(initialState);
   };
 
   const handleDisabledButtons = e => {
@@ -34,6 +36,12 @@ const Keyboard = () => {
   useEffect(() => {
     checkButtonsInLocalStorage();
   }, []);
+
+  useEffect(() => {
+    if (gameState.moves === 0) {
+      checkButtonsInLocalStorage();
+    }
+  }, [gameState]);
 
   useEffect(() => {
     saveInLocalStorage('disabledButtons', disabledButtons);

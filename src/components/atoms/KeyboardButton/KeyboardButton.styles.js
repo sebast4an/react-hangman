@@ -29,4 +29,8 @@ export const Button = styled.button`
       color: ${({ theme }) => theme.colors.grey};
     }
   }
+
+  &:focus-visible {
+    outline: 2px solid ${({ theme }) => theme.colors.white};
+  }
 `;

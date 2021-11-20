@@ -97,6 +97,10 @@ export const HamburgerButton = styled.button`
   &:hover {
     border: 2px solid ${({ theme }) => theme.colors.white};
   }
+
+  &:focus-visible {
+    outline: 2px solid ${({ theme }) => theme.colors.white};
+  }
 `;
 
 export const List = styled.ul`

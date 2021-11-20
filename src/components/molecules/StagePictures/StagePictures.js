@@ -10,7 +10,7 @@ const StagePictures = () => {
 
   return (
     <Images>
-      <HangmanImage numberstage={mistakes} />
+      <HangmanImage numberstage={mistakes} alt={`Image showing stage ${mistakes}`} />
     </Images>
   );
 };

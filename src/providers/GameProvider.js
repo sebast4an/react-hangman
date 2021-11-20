@@ -9,6 +9,7 @@ export const GameContext = React.createContext({
   startGame: () => {},
   checkCliked: () => {},
   handleClikedButtons: () => {},
+  solveGame: () => {},
   gameState: {},
 });
 
@@ -80,6 +81,16 @@ const GameProvider = ({ children }) => {
     checkCliked(fullWordState, clikedButton, clikedButtonValue);
   };
 
+  const solveGame = () => {
+    setGameState({
+      ...gameState,
+      hiddenWord: gameState.fullWord,
+      started: false,
+      result: 'Are you giving up?',
+    });
+    localStorage.clear();
+  };
+
   useEffect(() => {
     startGame();
   }, []);
@@ -117,6 +128,7 @@ const GameProvider = ({ children }) => {
           startGame,
           checkCliked,
           handleClikedButtons,
+          solveGame,
           gameState,
         }}
       >
