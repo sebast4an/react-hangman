@@ -16,6 +16,7 @@ export const Button = styled.button`
   align-items: center;
   align-content: center;
   transition: background-color 0.3s ease, color 0.3s ease;
+  cursor: pointer;
 
   &:hover {
     background-color: ${({ theme }) => theme.colors.grey};
@@ -24,6 +25,7 @@ export const Button = styled.button`
 
   &:disabled {
     background-color: ${({ theme }) => theme.colors.black};
+    cursor: not-allowed;
 
     &:hover {
       color: ${({ theme }) => theme.colors.grey};

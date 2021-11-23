@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Title } from 'components/atoms/Title/Title';
 import { StyledList, StyledListElement } from 'components/atoms/StyledList/StyledList';
 import { Line } from 'components/atoms/Line/Line';
-import { StyledParagraph } from 'components/atoms/StyledParagraph/StyledParagraph';
+import { Paragraph } from 'components/atoms/Paragraph/Paragraph';
 import winnerIMG from 'assets/img/cat_winner.jpg';
 import { GameContext } from 'providers/GameProvider';
 import { NewGamePanel, Image, DefaultButton } from './NewGame.styles';
@@ -26,7 +26,7 @@ const NewGame = () => {
         <StyledListElement>Moves: {moves}</StyledListElement>
       </StyledList>
       <Title>Word:</Title>
-      <StyledParagraph>{fullWordString}</StyledParagraph>
+      <Paragraph>{fullWordString}</Paragraph>
       <DefaultButton onClick={startGame}>Start new game</DefaultButton>
     </NewGamePanel>
   );

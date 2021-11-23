@@ -3,7 +3,7 @@ import { randomNumber } from 'helpers/general';
 import { loadFromLocalStorage, saveInLocalStorage } from 'helpers/localStorage';
 
 //TODO: Makes fetch data from API (graphQL)!
-const words = ['github', 'sebastian'];
+const words = ['trzy skladniki', 'dwa skladniki'];
 
 export const GameContext = React.createContext({
   startGame: () => {},
@@ -28,8 +28,11 @@ const GameProvider = ({ children }) => {
   const startGame = () => {
     const number = randomNumber(words.length - 1);
     const fullWord = [...words[number]];
+    const spaceInWord = fullWord.indexOf(' ');
     const hiddenWord = new Array(fullWord.length);
     hiddenWord.fill('_', 0);
+
+    if (spaceInWord > -1) hiddenWord[spaceInWord] = ' ';
 
     const checkLocalStorage = () => {
       const data = loadFromLocalStorage('gameState');
