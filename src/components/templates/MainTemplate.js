@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import Navigation from 'components/organisms/Navigation/Navigation';
+import Footer from 'components/organisms/Footer/Footer';
 
 const Wrapper = styled.div`
   width: 100%;
@@ -8,7 +9,7 @@ const Wrapper = styled.div`
   height: auto;
   background-color: ${({ theme }) => theme.colors.black};
   display: flex;
-  justify-content: center;
+  flex-flow: column nowrap;
 `;
 
 const MainTemplate = ({ children }) => {
@@ -16,6 +17,7 @@ const MainTemplate = ({ children }) => {
     <Wrapper>
       <Navigation />
       {children}
+      <Footer />
     </Wrapper>
   );
 };

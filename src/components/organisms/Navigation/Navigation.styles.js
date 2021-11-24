@@ -1,9 +1,17 @@
 import styled from 'styled-components';
 import { NavLink } from 'react-router-dom';
 
-export const Nav = styled.nav`
+export const Wrapper = styled.div`
   position: fixed;
   z-index: 1;
+  width: 100%;
+  height: auto;
+  margin: 0;
+  padding: 0;
+  background-color: ${({ theme }) => theme.colors.black};
+`;
+
+export const Nav = styled.nav`
   background-color: ${({ theme }) => theme.colors.lightBlack};
   color: ${({ theme }) => theme.colors.white};
   padding: 1rem;
@@ -15,6 +23,7 @@ export const Nav = styled.nav`
   justify-content: space-between;
   align-items: center;
   align-content: center;
+  box-shadow: 0px 2px 24px 1px ${({ theme }) => theme.colors.darkBlue};
 `;
 
 export const Header = styled.header`
@@ -97,6 +106,10 @@ export const HamburgerButton = styled.button`
   &:hover {
     border: 2px solid ${({ theme }) => theme.colors.white};
   }
+
+  &:focus-visible {
+    outline: 2px solid ${({ theme }) => theme.colors.white};
+  }
 `;
 
 export const List = styled.ul`
@@ -113,8 +126,8 @@ export const List = styled.ul`
   padding: 0;
   margin: 0;
   position: absolute;
-  top: -10px;
-  left: -10px;
+  top: 0px;
+  left: 0px;
   display: flex;
   flex-flow: column wrap;
   justify-content: center;
@@ -139,5 +152,15 @@ export const StyledLink = styled(NavLink)`
   &.active-link {
     font-weight: ${({ theme }) => theme.fontWeight.bold};
     color: ${({ theme }) => theme.colors.white};
+  }
+
+  &:hover {
+    color: ${({ theme }) => theme.colors.lightGrey};
+  }
+
+  &:focus-visible {
+    outline: 3px solid ${({ theme }) => theme.colors.white};
+    padding: 10px;
+    border-radius: 10px;
   }
 `;

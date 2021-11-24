@@ -11,3 +11,11 @@ export const Counters = styled.div`
   align-items: center;
   margin: 0 10px;
 `;
+
+export const ButtonsWrapper = styled.div`
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-between;
+  align-items: center;
+  margin: 3rem 10px 0;
+`;

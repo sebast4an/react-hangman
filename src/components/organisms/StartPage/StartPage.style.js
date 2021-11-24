@@ -9,7 +9,7 @@ export const StyledLink = styled(Link)`
   font-weight: ${({ theme }) => theme.fontWeight.bold};
   text-decoration: none;
   margin: 30px 0;
-  max-width: max-content;
+  width: max-content;
   padding: 1rem;
   border-radius: 10px;
   transition: background 0.3s ease, color 0.2s ease;

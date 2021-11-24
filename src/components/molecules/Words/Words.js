@@ -5,7 +5,7 @@ import { Word } from './Words.styles';
 const Words = ({ children }) => {
   return (
     <>
-      <Word>{children}</Word>
+      <Word aria-label={`The word currently discovered is: ${children}`}>{children}</Word>
     </>
   );
 };
