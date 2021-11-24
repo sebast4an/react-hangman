@@ -10,7 +10,7 @@ const StartPage = () => (
     <Paragraph>It is Game build in React, all words are fetch from API. Game state is saved in your brower.</Paragraph>
     <StyledLink to="/game">Start Game!</StyledLink>
     <Title>About the game:</Title>
-    <Paragraph>You have 14 tries. The game gets new words from the API dictionary. All words is in english and about IT and (of course 😼) cats.</Paragraph>
+    <Paragraph>You have 14 tries. The game gets new words from the API (SWAPI). All words is in english and about Star Wars.</Paragraph>
     <Title>Technologies used to build this game:</Title>
     <StyledList>
       <StyledListElement>React with React Router and React Context</StyledListElement>

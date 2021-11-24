@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { randomNumber } from 'helpers/general';
+import { searchAndReturnInstances, randomNumber } from 'helpers/general';
 import { loadFromLocalStorage, saveInLocalStorage } from 'helpers/localStorage';
+import { getDataFromAPI } from 'helpers/api';
 
 //TODO: Makes fetch data from API (graphQL)!
-const words = ['trzy skladniki', 'dwa skladniki'];
+const words = ['trzy skladniki i 12scie', 'dwa skladniki i cztery'];
 
 export const GameContext = React.createContext({
   startGame: () => {},
@@ -26,20 +27,22 @@ const GameProvider = ({ children }) => {
   const [gameState, setGameState] = useState(initialState);
 
   const startGame = () => {
-    const number = randomNumber(words.length - 1);
-    const fullWord = [...words[number]];
-    const spaceInWord = fullWord.indexOf(' ');
-    const hiddenWord = new Array(fullWord.length);
-    hiddenWord.fill('_', 0);
-
-    if (spaceInWord > -1) hiddenWord[spaceInWord] = ' ';
-
     const checkLocalStorage = () => {
       const data = loadFromLocalStorage('gameState');
 
-      if (data && data.result === 0) {
-        setGameState(data);
-      } else {
+      if (data && data.result === 0) setGameState(data);
+      else {
+        getDataFromAPI().then(data => console.log(data));
+        const number = randomNumber(words.length - 1);
+        const fullWord = [...words[number]];
+        const hiddenWord = new Array(fullWord.length).fill('_', 0);
+        const space = ' ';
+
+        if (fullWord.indexOf(space) > -1) {
+          const spaceTable = searchAndReturnInstances(fullWord, space);
+          spaceTable.forEach(spaceNumber => (hiddenWord[spaceNumber] = space));
+        }
+
         setGameState({
           fullWord,
           hiddenWord,
@@ -59,7 +62,7 @@ const GameProvider = ({ children }) => {
 
     if (fullWordState.indexOf(clikedButtonValue) > -1) {
       const quessedLetters = [...gameState.hiddenWord];
-      const lettersIndex = fullWordState.flatMap((searched, index) => (searched === clikedButtonValue ? index : []));
+      const lettersIndex = searchAndReturnInstances(fullWordState, clikedButtonValue);
       lettersIndex.forEach(number => (quessedLetters[number] = clikedButtonValue));
 
       setGameState({
