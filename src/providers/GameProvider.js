@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { searchAndReturnInstances, randomNumber } from 'helpers/general';
 import { loadFromLocalStorage, saveInLocalStorage } from 'helpers/localStorage';
-import { getDataFromAPI } from 'helpers/api';
+import axios from 'axios';
 
 //TODO: Makes fetch data from API (graphQL)!
 const words = ['trzy skladniki i 12scie', 'dwa skladniki i cztery'];
@@ -23,8 +23,26 @@ const initialState = {
   result: 0,
 };
 
+//TODO: Write alternative data when API return error
+
 const GameProvider = ({ children }) => {
   const [gameState, setGameState] = useState(initialState);
+
+  useEffect(() => {
+    axios({
+      url: 'https://api.spacex.land/graphql/',
+      method: 'post',
+      data: {
+        query: `
+          {
+            rockets {
+              name
+            }
+          }
+          `,
+      },
+    }).then(result => console.log(result.data));
+  }, []);
 
   const startGame = () => {
     const checkLocalStorage = () => {
@@ -32,7 +50,6 @@ const GameProvider = ({ children }) => {
 
       if (data && data.result === 0) setGameState(data);
       else {
-        getDataFromAPI().then(data => console.log(data));
         const number = randomNumber(words.length - 1);
         const fullWord = [...words[number]];
         const hiddenWord = new Array(fullWord.length).fill('_', 0);

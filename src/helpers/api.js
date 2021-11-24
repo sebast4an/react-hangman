@@ -15,5 +15,5 @@ export const getDataFromAPI = () => {
         }
         `,
     },
-  });
+  }).then(data => data);
 };
