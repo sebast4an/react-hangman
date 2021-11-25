@@ -1,5 +1,5 @@
 # React Hangman Game 🎲
-It is responsive game project build in React. Data is fetch from SpaceX api using GraphQL. Current game state save in user browser. 
+It is responsive game project build in React. Data is fetch from SpaceX api using GraphQL. The current state of the game is saved in the browser.
 
 ### Project currently in development ⚠️
 
