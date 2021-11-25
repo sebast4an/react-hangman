@@ -1,14 +1,42 @@
-# React Hangman Game
-Project currently in development  ⚠️
+# React Hangman Game 🎲
+It is responsive game project build in React. Data is fetch from SpaceX api using GraphQL. Current game state save in user browser. 
 
-## :abcd: Configured:
+### Project currently in development ⚠️
 
-| Tech                                                                                  | Description                 |
-| ------------------------------------------------------------------------------------- | --------------------------- |
-| Absolute import                                                                       | _Src folder_                |
-| styled-components                                                                     | _CSS in JS_                 |
-| [ESLint](https://github.com/sebast4an/react-boilerplate/blob/main/.eslintrc)          | _Static code analysis_      |
-| [Prettier](https://github.com/sebast4an/react-boilerplate/blob/main/.prettierrc)      | _Code formatter_            |
-| [Husky](https://github.com/sebast4an/react-boilerplate/blob/main/.huskyrc)            | _Pre-commit hooks_          |
-| [Lint-staged](https://github.com/sebast4an/react-boilerplate/blob/main/.lintstagedrc) | _Pre-commit checks_         |
+## Main functions: 🔥
+- [x] Getting words of puzzles from the API (GraphQL)
+- [x] Statistics (counting moves and mistakes)
+- [x] Reset the game (generate a new word)
+- [x] Ability to surrender (displays a word and stats)
+- [x] Save currenct state (LocalStorage)
+- [x] Disabling the buttons once used
+- [ ] Download and receive memes with cats (restAPI)
+- [ ] RWD
+
+## Technology: 💻
+- React (Context, Router)
+- GraphQL (Axios)
+- StyledCompontents
+- Prettier / ESLint 
+- Husky / lint-staged 
+- Jest / React Testing Library
+- Absolute import
+
+## Using: 💾
+
+Installation:
+```
+npm i
+```
+
+Development:
+```
+npm start
+```
+
+Format all files by prettier:
+```
+npm run format
+```
+
 
