@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { searchAndReturnInstances, randomNumber } from 'helpers/general';
 import { loadFromLocalStorage, saveInLocalStorage } from 'helpers/localStorage';
-import axios from 'axios';
-
-//TODO: Makes fetch data from API (graphQL)!
-const words = ['trzy skladniki i 12scie', 'dwa skladniki i cztery'];
+import { getDataFromSpaceXapi } from 'helpers/api';
+import offlineData from 'assets/alternativeData.json';
 
 export const GameContext = React.createContext({
   startGame: () => {},
@@ -15,63 +13,52 @@ export const GameContext = React.createContext({
 });
 
 const initialState = {
+  isLoaded: false,
+  isStarted: false,
   fullWord: [],
   hiddenWord: [],
   mistakes: 0,
   moves: 0,
-  started: false,
   result: 0,
 };
 
-//TODO: Write alternative data when API return error
+const initialDataState = [];
 
+//TODO: Write alternative data when API return error
 const GameProvider = ({ children }) => {
+  const [dataState, setDataState] = useState(initialDataState);
   const [gameState, setGameState] = useState(initialState);
 
-  useEffect(() => {
-    axios({
-      url: 'https://api.spacex.land/graphql/',
-      method: 'post',
-      data: {
-        query: `
-          {
-            rockets {
-              name
-            }
-          }
-          `,
-      },
-    }).then(result => console.log(result.data));
-  }, []);
-
   const startGame = () => {
-    const checkLocalStorage = () => {
-      const data = loadFromLocalStorage('gameState');
+    const data = loadFromLocalStorage('gameState');
 
-      if (data && data.result === 0) setGameState(data);
-      else {
-        const number = randomNumber(words.length - 1);
-        const fullWord = [...words[number]];
-        const hiddenWord = new Array(fullWord.length).fill('_', 0);
-        const space = ' ';
+    if (data && data.result === 0) setGameState(data);
+    else {
+      const categoryNumber = randomNumber(dataState.length - 1);
+      const wordNumber = randomNumber(dataState[categoryNumber].length - 1);
+      const { name: word } = dataState[categoryNumber][wordNumber];
 
-        if (fullWord.indexOf(space) > -1) {
-          const spaceTable = searchAndReturnInstances(fullWord, space);
-          spaceTable.forEach(spaceNumber => (hiddenWord[spaceNumber] = space));
-        }
+      console.log(word);
 
-        setGameState({
-          fullWord,
-          hiddenWord,
-          mistakes: 0,
-          moves: 0,
-          started: true,
-          result: 0,
-        });
+      const fullWord = [...word.toLowerCase()];
+      const hiddenWord = new Array(fullWord.length).fill('_', 0);
+      const space = ' ';
+
+      if (fullWord.indexOf(space) > -1) {
+        const spaceTable = searchAndReturnInstances(fullWord, space);
+        spaceTable.forEach(spaceNumber => (hiddenWord[spaceNumber] = space));
       }
-    };
 
-    checkLocalStorage();
+      setGameState({
+        isStarted: true,
+        isLoaded: true,
+        fullWord,
+        hiddenWord,
+        mistakes: 0,
+        moves: 0,
+        result: 0,
+      });
+    }
   };
 
   const checkCliked = (fullWordState, clikedButton, clikedButtonValue) => {
@@ -108,18 +95,44 @@ const GameProvider = ({ children }) => {
     setGameState({
       ...gameState,
       hiddenWord: gameState.fullWord,
-      started: false,
+      isStarted: false,
       result: 'Are you giving up?',
     });
     localStorage.clear();
   };
 
   useEffect(() => {
-    startGame();
-  }, []);
+    if (dataState.length === 0) {
+      getDataFromSpaceXapi()
+        .then(
+          ({
+            data: {
+              data: { rockets, ships, missions },
+            },
+          }) => {
+            setDataState([rockets, ships, missions]);
+            setGameState({ ...gameState, isLoaded: true });
+          }
+        )
+        .catch(error => {
+          alert(`Currently, I can't fetch data from SpaceX api. Maybe you don't have connection to internet? I load alternative data. 
+          
+          ${error}`);
+          const { rockets } = offlineData;
+          setDataState([rockets]);
+          setGameState({ ...gameState, isLoaded: true });
+        });
+    }
+  }, [dataState, gameState]);
 
   useEffect(() => {
-    if (gameState.started) {
+    if (gameState.isLoaded) {
+      startGame();
+    }
+  }, [gameState.isLoaded]);
+
+  useEffect(() => {
+    if (gameState.isStarted) {
       const fullWord = gameState.fullWord.join('');
       const hiddenWord = gameState.hiddenWord.join('');
 
@@ -128,7 +141,7 @@ const GameProvider = ({ children }) => {
       if (fullWord === hiddenWord) {
         setGameState({
           ...gameState,
-          started: false,
+          isStarted: false,
           result: 'You Win!',
         });
         localStorage.clear();
@@ -136,7 +149,7 @@ const GameProvider = ({ children }) => {
       if (gameState.mistakes === 14) {
         setGameState({
           ...gameState,
-          started: false,
+          isStarted: false,
           result: 'You Lost!',
         });
         localStorage.clear();

@@ -1,36 +1,46 @@
-# <img width="70" height="70" src="https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg"> React boilerplate
+# React Hangman Game 🎲
 
-My boilerplate for react with configurated styled-components for CSS in JS. ESlint & Prettier for code analysis and format. Husky & lint-staged for run prettier before commit. An absolute import for src folder in default.
+It is responsive game project build in React. Data is fetch from SpaceX api using GraphQL. The current state of the game is saved in the browser.
 
-## :floppy_disk: Installation:
+### Project currently in development ⚠️
 
-Clone this repository and install by typing:
+## Main functions: 🔥
 
-```bash
+- [x] Getting words of puzzles from the API (GraphQL)
+- [x] Statistics (counting moves and mistakes)
+- [x] Reset the game (generate a new word)
+- [x] Ability to surrender (displays a word and stats)
+- [x] Save currenct state (LocalStorage)
+- [x] Disabling the buttons once used
+- [ ] Download and receive memes with cats (restAPI)
+- [ ] RWD
+
+## Technology: 💻
+
+- React (Context, Router)
+- GraphQL (Axios)
+- StyledCompontents
+- Prettier / ESLint
+- Husky / lint-staged
+- Jest / React Testing Library
+- Absolute import
+
+## Using: 💾
+
+Installation:
+
+```
 npm i
 ```
 
-## :computer: Using:
+Development:
 
-Development server:
-
-```bash
+```
 npm start
 ```
 
 Format all files by prettier:
 
-```bash
+```
 npm run format
 ```
-
-## :abcd: Configured:
-
-| Tech                                                                                  | Description            |
-| ------------------------------------------------------------------------------------- | ---------------------- |
-| Absolute import                                                                       | _Src folder_           |
-| styled-components                                                                     | _CSS in JS_            |
-| [ESLint](https://github.com/sebast4an/react-boilerplate/blob/main/.eslintrc)          | _Static code analysis_ |
-| [Prettier](https://github.com/sebast4an/react-boilerplate/blob/main/.prettierrc)      | _Code formatter_       |
-| [Husky](https://github.com/sebast4an/react-boilerplate/blob/main/.huskyrc)            | _Pre-commit hooks_     |
-| [Lint-staged](https://github.com/sebast4an/react-boilerplate/blob/main/.lintstagedrc) | _Pre-commit checks_    |
