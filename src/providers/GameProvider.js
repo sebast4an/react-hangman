@@ -6,7 +6,6 @@ import offlineData from 'assets/alternativeData.json';
 
 export const GameContext = React.createContext({
   startGame: () => {},
-  checkCliked: () => {},
   handleClikedButtons: () => {},
   solveGame: () => {},
   gameState: {},
@@ -22,52 +21,53 @@ const initialState = {
   result: 0,
 };
 
-const initialDataState = [];
-
-//TODO: Write alternative data when API return error
 const GameProvider = ({ children }) => {
-  const [dataState, setDataState] = useState(initialDataState);
+  const [dataState, setDataState] = useState([]);
   const [gameState, setGameState] = useState(initialState);
 
+  const returnRandomWord = () => {
+    const category = randomNumber(dataState.length - 1);
+    const wordNumber = randomNumber(dataState[category].length - 1);
+    const { name: word } = dataState[category][wordNumber];
+
+    const fullWord = [...word.toLowerCase()];
+    const hiddenWord = new Array(fullWord.length).fill('_', 0);
+    const space = ' ';
+
+    //find all spaces in the text and add to hidden word
+    if (fullWord.indexOf(space) > -1) {
+      const spaceTable = searchAndReturnInstances(fullWord, space);
+      spaceTable.forEach(spaceNumber => (hiddenWord[spaceNumber] = space));
+    }
+    console.log(word);
+
+    return { fullWord, hiddenWord };
+  };
+
   const startGame = () => {
-    const data = loadFromLocalStorage('gameState');
+    const localData = loadFromLocalStorage('gameState');
 
-    if (data && data.result === 0) setGameState(data);
+    if (localData && localData.result === 0) setGameState(localData);
     else {
-      const categoryNumber = randomNumber(dataState.length - 1);
-      const wordNumber = randomNumber(dataState[categoryNumber].length - 1);
-      const { name: word } = dataState[categoryNumber][wordNumber];
-
-      console.log(word);
-
-      const fullWord = [...word.toLowerCase()];
-      const hiddenWord = new Array(fullWord.length).fill('_', 0);
-      const space = ' ';
-
-      if (fullWord.indexOf(space) > -1) {
-        const spaceTable = searchAndReturnInstances(fullWord, space);
-        spaceTable.forEach(spaceNumber => (hiddenWord[spaceNumber] = space));
-      }
+      const { fullWord, hiddenWord } = returnRandomWord();
 
       setGameState({
+        ...gameState,
         isStarted: true,
         isLoaded: true,
         fullWord,
         hiddenWord,
-        mistakes: 0,
-        moves: 0,
-        result: 0,
       });
     }
   };
 
-  const checkCliked = (fullWordState, clikedButton, clikedButtonValue) => {
-    clikedButton.disabled = true;
+  const checkClikedButtonValue = (fullWord, button, buttonValue) => {
+    button.disabled = true;
 
-    if (fullWordState.indexOf(clikedButtonValue) > -1) {
+    if (fullWord.indexOf(buttonValue) > -1) {
       const quessedLetters = [...gameState.hiddenWord];
-      const lettersIndex = searchAndReturnInstances(fullWordState, clikedButtonValue);
-      lettersIndex.forEach(number => (quessedLetters[number] = clikedButtonValue));
+      const lettersIndex = searchAndReturnInstances(fullWord, buttonValue);
+      lettersIndex.forEach(number => (quessedLetters[number] = buttonValue));
 
       setGameState({
         ...gameState,
@@ -84,11 +84,11 @@ const GameProvider = ({ children }) => {
   };
 
   const handleClikedButtons = e => {
-    const fullWordState = gameState.fullWord;
+    const fullWord = gameState.fullWord;
     const clikedButton = e.target;
     const clikedButtonValue = clikedButton.innerText.toLowerCase();
 
-    checkCliked(fullWordState, clikedButton, clikedButtonValue);
+    checkClikedButtonValue(fullWord, clikedButton, clikedButtonValue);
   };
 
   const solveGame = () => {
@@ -129,6 +129,7 @@ const GameProvider = ({ children }) => {
     if (gameState.isLoaded) {
       startGame();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [gameState.isLoaded]);
 
   useEffect(() => {
@@ -162,7 +163,6 @@ const GameProvider = ({ children }) => {
       <GameContext.Provider
         value={{
           startGame,
-          checkCliked,
           handleClikedButtons,
           solveGame,
           gameState,

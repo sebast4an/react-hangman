@@ -12,7 +12,6 @@ It is responsive game project build in React. Data is fetch from SpaceX api usin
 - [x] Ability to surrender (displays a word and stats)
 - [x] Save currenct state (LocalStorage)
 - [x] Disabling the buttons once used
-- [ ] Download and receive memes with cats (restAPI)
 - [ ] RWD
 
 ## Technology: 💻
