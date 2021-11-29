@@ -52,7 +52,7 @@ const GameProvider = ({ children }) => {
       const { fullWord, hiddenWord } = returnRandomWord();
 
       setGameState({
-        ...gameState,
+        ...initialState,
         isStarted: true,
         isLoaded: true,
         fullWord,
@@ -96,7 +96,7 @@ const GameProvider = ({ children }) => {
       ...gameState,
       hiddenWord: gameState.fullWord,
       isStarted: false,
-      result: 'Are you giving up?',
+      result: 1,
     });
     localStorage.clear();
   };
@@ -107,10 +107,10 @@ const GameProvider = ({ children }) => {
         .then(
           ({
             data: {
-              data: { rockets, ships, missions },
+              data: { rockets, ships, missions, launchpads },
             },
           }) => {
-            setDataState([rockets, ships, missions]);
+            setDataState([rockets, ships, missions, launchpads]);
             setGameState({ ...gameState, isLoaded: true });
           }
         )
@@ -143,7 +143,7 @@ const GameProvider = ({ children }) => {
         setGameState({
           ...gameState,
           isStarted: false,
-          result: 'You Win!',
+          result: 2,
         });
         localStorage.clear();
       }
@@ -151,7 +151,7 @@ const GameProvider = ({ children }) => {
         setGameState({
           ...gameState,
           isStarted: false,
-          result: 'You Lost!',
+          result: 3,
         });
         localStorage.clear();
       }
