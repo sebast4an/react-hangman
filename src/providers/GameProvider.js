@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { searchAndReturnInstances, randomNumber } from 'helpers/general';
 import { loadFromLocalStorage, saveInLocalStorage } from 'helpers/localStorage';
-import { getDataFromSpaceXapi } from 'helpers/api';
+import { spacexAPI } from 'helpers/api';
 import offlineData from 'assets/alternativeData.json';
 
 export const GameContext = React.createContext({
@@ -103,7 +103,7 @@ const GameProvider = ({ children }) => {
 
   useEffect(() => {
     if (dataState.length === 0) {
-      getDataFromSpaceXapi()
+      spacexAPI()
         .then(
           ({
             data: {
