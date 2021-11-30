@@ -5,17 +5,20 @@ import NewGame from '../NewGame/NewGame';
 import { GameContext } from 'providers/GameProvider';
 
 const GameBoard = () => {
-  const { gameState } = useContext(GameContext);
+  const {
+    gameState: { isLoaded, isStarted, fullWord },
+  } = useContext(GameContext);
 
-  const switchGame = state => {
-    if (state) {
-      return <GameRunning />;
+  const switchGame = (isLoaded, isStarted, fullWord) => {
+    if (isLoaded && fullWord.length !== 0) {
+      if (isStarted) return <GameRunning />;
+      else return <NewGame />;
     } else {
-      return <NewGame />;
+      return 'Game is loading. Please wait...';
     }
   };
 
-  return <Board>{switchGame(gameState.started)}</Board>;
+  return <Board>{switchGame(isLoaded, isStarted, fullWord)}</Board>;
 };
 
 export default GameBoard;

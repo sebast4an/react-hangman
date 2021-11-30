@@ -1,69 +1,73 @@
 import React, { useState, useEffect } from 'react';
 import { searchAndReturnInstances, randomNumber } from 'helpers/general';
 import { loadFromLocalStorage, saveInLocalStorage } from 'helpers/localStorage';
-import { getDataFromAPI } from 'helpers/api';
-
-//TODO: Makes fetch data from API (graphQL)!
-const words = ['trzy skladniki i 12scie', 'dwa skladniki i cztery'];
+import { spacexAPI } from 'helpers/api';
+import offlineData from 'assets/alternativeData.json';
 
 export const GameContext = React.createContext({
   startGame: () => {},
-  checkCliked: () => {},
   handleClikedButtons: () => {},
   solveGame: () => {},
   gameState: {},
 });
 
 const initialState = {
+  isLoaded: false,
+  isStarted: false,
   fullWord: [],
   hiddenWord: [],
   mistakes: 0,
   moves: 0,
-  started: false,
   result: 0,
 };
 
 const GameProvider = ({ children }) => {
+  const [dataState, setDataState] = useState([]);
   const [gameState, setGameState] = useState(initialState);
 
-  const startGame = () => {
-    const checkLocalStorage = () => {
-      const data = loadFromLocalStorage('gameState');
+  const returnRandomWord = () => {
+    const category = randomNumber(dataState.length - 1);
+    const wordNumber = randomNumber(dataState[category].length - 1);
+    const { name: word } = dataState[category][wordNumber];
 
-      if (data && data.result === 0) setGameState(data);
-      else {
-        getDataFromAPI().then(data => console.log(data));
-        const number = randomNumber(words.length - 1);
-        const fullWord = [...words[number]];
-        const hiddenWord = new Array(fullWord.length).fill('_', 0);
-        const space = ' ';
+    const fullWord = [...word.toLowerCase()];
+    const hiddenWord = new Array(fullWord.length).fill('_', 0);
+    const space = ' ';
 
-        if (fullWord.indexOf(space) > -1) {
-          const spaceTable = searchAndReturnInstances(fullWord, space);
-          spaceTable.forEach(spaceNumber => (hiddenWord[spaceNumber] = space));
-        }
+    //find all spaces in the text and add to hidden word
+    if (fullWord.indexOf(space) > -1) {
+      const spaceTable = searchAndReturnInstances(fullWord, space);
+      spaceTable.forEach(spaceNumber => (hiddenWord[spaceNumber] = space));
+    }
+    console.log(word);
 
-        setGameState({
-          fullWord,
-          hiddenWord,
-          mistakes: 0,
-          moves: 0,
-          started: true,
-          result: 0,
-        });
-      }
-    };
-
-    checkLocalStorage();
+    return { fullWord, hiddenWord };
   };
 
-  const checkCliked = (fullWordState, clikedButton, clikedButtonValue) => {
-    clikedButton.disabled = true;
+  const startGame = () => {
+    const localData = loadFromLocalStorage('gameState');
 
-    if (fullWordState.indexOf(clikedButtonValue) > -1) {
+    if (localData && localData.result === 0) setGameState(localData);
+    else {
+      const { fullWord, hiddenWord } = returnRandomWord();
+
+      setGameState({
+        ...initialState,
+        isStarted: true,
+        isLoaded: true,
+        fullWord,
+        hiddenWord,
+      });
+    }
+  };
+
+  const checkClikedButtonValue = (fullWord, button, buttonValue) => {
+    button.disabled = true;
+
+    if (fullWord.indexOf(buttonValue) > -1) {
       const quessedLetters = [...gameState.hiddenWord];
-      const lettersIndex = searchAndReturnInstances(fullWordState, clikedButtonValue);
-      lettersIndex.forEach(number => (quessedLetters[number] = clikedButtonValue));
+      const lettersIndex = searchAndReturnInstances(fullWord, buttonValue);
+      lettersIndex.forEach(number => (quessedLetters[number] = buttonValue));
 
       setGameState({
         ...gameState,
@@ -80,29 +84,56 @@ const GameProvider = ({ children }) => {
   };
 
   const handleClikedButtons = e => {
-    const fullWordState = gameState.fullWord;
+    const fullWord = gameState.fullWord;
     const clikedButton = e.target;
     const clikedButtonValue = clikedButton.innerText.toLowerCase();
 
-    checkCliked(fullWordState, clikedButton, clikedButtonValue);
+    checkClikedButtonValue(fullWord, clikedButton, clikedButtonValue);
   };
 
   const solveGame = () => {
     setGameState({
       ...gameState,
       hiddenWord: gameState.fullWord,
-      started: false,
-      result: 'Are you giving up?',
+      isStarted: false,
+      result: 1,
     });
     localStorage.clear();
   };
 
   useEffect(() => {
-    startGame();
-  }, []);
+    if (dataState.length === 0) {
+      spacexAPI()
+        .then(
+          ({
+            data: {
+              data: { rockets, ships, missions, launchpads },
+            },
+          }) => {
+            setDataState([rockets, ships, missions, launchpads]);
+            setGameState({ ...gameState, isLoaded: true });
+          }
+        )
+        .catch(error => {
+          alert(`Currently, I can't fetch data from SpaceX api. Maybe you don't have connection to internet? I load alternative data. 
+          
+          ${error}`);
+          const { rockets } = offlineData;
+          setDataState([rockets]);
+          setGameState({ ...gameState, isLoaded: true });
+        });
+    }
+  }, [dataState, gameState]);
 
   useEffect(() => {
-    if (gameState.started) {
+    if (gameState.isLoaded) {
+      startGame();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [gameState.isLoaded]);
+
+  useEffect(() => {
+    if (gameState.isStarted) {
       const fullWord = gameState.fullWord.join('');
       const hiddenWord = gameState.hiddenWord.join('');
 
@@ -111,16 +142,16 @@ const GameProvider = ({ children }) => {
       if (fullWord === hiddenWord) {
         setGameState({
           ...gameState,
-          started: false,
-          result: 'You Win!',
+          isStarted: false,
+          result: 2,
         });
         localStorage.clear();
       }
       if (gameState.mistakes === 14) {
         setGameState({
           ...gameState,
-          started: false,
-          result: 'You Lost!',
+          isStarted: false,
+          result: 3,
         });
         localStorage.clear();
       }
@@ -132,7 +163,6 @@ const GameProvider = ({ children }) => {
       <GameContext.Provider
         value={{
           startGame,
-          checkCliked,
           handleClikedButtons,
           solveGame,
           gameState,
