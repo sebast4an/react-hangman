@@ -6,7 +6,8 @@ It is responsive game project build in React. Data is fetch from SpaceX api usin
 
 ## Main functions: 🔥
 
-- [x] Getting words of puzzles from the API (GraphQL)
+- [x] Getting words of puzzles from SpaceX API (GraphQL)
+- [x] Getting cats pictures from Cats API (restAPI)
 - [x] Statistics (counting moves and mistakes)
 - [x] Reset the game (generate a new word)
 - [x] Ability to surrender (displays a word and stats)
