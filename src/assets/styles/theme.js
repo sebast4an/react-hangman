@@ -7,6 +7,7 @@ export const theme = {
     red: '#c62828',
     grey: '#6e717c',
     lightGrey: '#c2c5cf',
+    blue: '#4e5a90',
   },
   fontSize: {
     xl: '2.6rem',

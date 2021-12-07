@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
+
 import { Buttons } from './Keyboard.styles';
 import KeyboardButton from 'components/atoms/KeyboardButton/KeyboardButton';
 import { GameContext } from 'providers/GameProvider';
@@ -66,8 +66,4 @@ const Keyboard = () => {
   ));
 };
 
-Keyboard.propTypes = {
-  quessWord: PropTypes.string,
-  handleClikedButtons: PropTypes.func,
-};
 export default Keyboard;

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { searchAndReturnInstances, randomNumber } from 'helpers/general';
 import { loadFromLocalStorage, saveInLocalStorage } from 'helpers/localStorage';
 import { spacexAPI } from 'helpers/api';
-import offlineData from 'assets/alternativeData.json';
+import offlineData from 'assets/offlineData.json';
 
 export const GameContext = React.createContext({
   startGame: () => {},
@@ -39,7 +39,6 @@ const GameProvider = ({ children }) => {
       const spaceTable = searchAndReturnInstances(fullWord, space);
       spaceTable.forEach(spaceNumber => (hiddenWord[spaceNumber] = space));
     }
-    console.log(word);
 
     return { fullWord, hiddenWord };
   };
