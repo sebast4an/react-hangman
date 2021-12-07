@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import PropTypes from 'prop-types';
+
 import Keyboard from 'components/molecules/Keyboard/Keyboard';
 import Words from 'components/molecules/Words/Words';
 import StagePictures from 'components/molecules/StagePictures/StagePictures';
@@ -38,9 +38,4 @@ const GameRunning = () => {
   );
 };
 
-GameRunning.propTypes = {
-  mistakes: PropTypes.number,
-  moves: PropTypes.number,
-  hiddenWord: PropTypes.array,
-};
 export default GameRunning;

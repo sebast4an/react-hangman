@@ -1,8 +1,10 @@
 import React, { useContext } from 'react';
+
 import { Board } from './Gameboard.styles';
 import GameRunning from '../GameRunning/GameRunning';
 import NewGame from '../NewGame/NewGame';
 import { GameContext } from 'providers/GameProvider';
+import Loading from 'components/molecules/Loading/Loading';
 
 const GameBoard = () => {
   const {
@@ -14,7 +16,7 @@ const GameBoard = () => {
       if (isStarted) return <GameRunning />;
       else return <NewGame />;
     } else {
-      return 'Game is loading. Please wait...';
+      return <Loading />;
     }
   };
 

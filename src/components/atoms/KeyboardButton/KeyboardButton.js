@@ -11,7 +11,6 @@ const KeyboardButton = props => {
 };
 
 KeyboardButton.propTypes = {
-  props: PropTypes.any,
   children: PropTypes.string,
 };
 export default KeyboardButton;
