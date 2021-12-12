@@ -85,7 +85,7 @@ const GameProvider = ({ children }) => {
   const handleClikedButtons = e => {
     const fullWord = gameState.fullWord;
     const clikedButton = e.target;
-    const clikedButtonValue = clikedButton.innerText.toLowerCase();
+    const clikedButtonValue = clikedButton.innerHTML;
 
     checkClikedButtonValue(fullWord, clikedButton, clikedButtonValue);
   };

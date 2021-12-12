@@ -7,27 +7,37 @@ const Navigation = () => {
 
   const changeNavState = () => setIsOpen(prevState => !prevState);
 
+  const list = (
+    <List>
+      <ListElement>
+        <StyledLink to="/" activeClassName="active-link" exact onClick={changeNavState}>
+          Home Page
+        </StyledLink>
+      </ListElement>
+      <ListElement>
+        <StyledLink to="/game" activeClassName="active-link" onClick={changeNavState}>
+          Start game
+        </StyledLink>
+      </ListElement>
+      <ListElement>
+        <ClassicLink onClick={changeNavState} href="https://github.com/sebast4an/react-hangman" target="_blank" rel="noreferrer noopener">
+          Repository
+        </ClassicLink>
+      </ListElement>
+    </List>
+  );
+
   const viewNav = isOpen => {
-    return isOpen ? (
-      <List>
-        <ListElement>
-          <StyledLink to="/" activeClassName="active-link" exact onClick={changeNavState}>
-            Home Page
-          </StyledLink>
-        </ListElement>
-        <ListElement>
-          <StyledLink to="/game" activeClassName="active-link" onClick={changeNavState}>
-            Start game
-          </StyledLink>
-        </ListElement>
-        <ListElement>
-          <ClassicLink onClick={changeNavState} href="https://github.com/sebast4an/react-hangman" target="_blank" rel="noreferrer noopener">
-            Repository
-          </ClassicLink>
-        </ListElement>
-      </List>
-    ) : null;
+    if (window.innerWidth > 720) {
+      return list;
+    } else {
+      return isOpen ? list : null;
+    }
   };
+
+  window.addEventListener('resize', () => {
+    setIsOpen(true);
+  });
 
   return (
     <Wrapper>

@@ -27,7 +27,7 @@ const Keyboard = () => {
 
   const handleDisabledButtons = e => {
     const button = e.target;
-    const buttonValue = button.innerText.toLowerCase();
+    const buttonValue = button.innerHTML;
 
     if (button.hasAttribute('disabled')) setDisabledButtons(prevState => [...prevState, buttonValue]);
   };

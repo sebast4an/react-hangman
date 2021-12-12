@@ -5,7 +5,7 @@ import { ReactComponent as SVG } from 'assets/svg/footer.svg';
 import { ReactComponent as GitHubSVG } from 'assets/svg/github.svg';
 
 export const StyledFooter = styled.footer`
-  padding: 2rem 0.5rem;
+  padding: 1rem 0.5rem;
   margin: 0;
   width: 100%;
   background: ${({ theme }) => theme.colors.darkBlue};
@@ -13,6 +13,14 @@ export const StyledFooter = styled.footer`
   align-items: flex-end;
   justify-content: space-between;
   align-content: center;
+
+  @media (min-width: 1000px) {
+    padding: 1rem 4rem 1rem 4rem;
+  }
+
+  @media (min-width: 1300px) {
+    padding: 1rem 6rem 1rem 6rem;
+  }
 `;
 
 export const SVGWaves = styled(SVG)`

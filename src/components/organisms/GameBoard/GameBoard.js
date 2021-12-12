@@ -1,9 +1,10 @@
 import React, { useContext } from 'react';
 
-import { Board } from './Gameboard.styles';
-import GameRunning from '../GameRunning/GameRunning';
-import NewGame from '../NewGame/NewGame';
 import { GameContext } from 'providers/GameProvider';
+import { Board } from './Gameboard.styles';
+
+import GameRunning from '../GameRunning/GameRunning';
+import GameResult from '../GameResult/GameResult';
 import Loading from 'components/molecules/Loading/Loading';
 
 const GameBoard = () => {
@@ -14,7 +15,7 @@ const GameBoard = () => {
   const switchGame = (isLoaded, isStarted, fullWord) => {
     if (isLoaded && fullWord.length !== 0) {
       if (isStarted) return <GameRunning />;
-      else return <NewGame />;
+      else return <GameResult />;
     } else {
       return <Loading />;
     }
