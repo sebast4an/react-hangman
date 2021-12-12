@@ -9,6 +9,14 @@ export const Wrapper = styled.div`
   margin: 0;
   padding: 0;
   background-color: ${({ theme }) => theme.colors.black};
+
+  @media (min-width: 1000px) {
+    padding: 0 2.8rem 0 2.8rem;
+  }
+
+  @media (min-width: 1300px) {
+    padding: 0 5rem 0 5rem;
+  }
 `;
 
 export const Nav = styled.nav`
@@ -110,6 +118,11 @@ export const HamburgerButton = styled.button`
   &:focus-visible {
     outline: 2px solid ${({ theme }) => theme.colors.white};
   }
+
+  @media (min-width: 720px) {
+    display: none;
+    pointer-events: none;
+  }
 `;
 
 export const List = styled.ul`
@@ -137,12 +150,26 @@ export const List = styled.ul`
   width: 100vw;
   height: 100vh;
   animation: opacityAnimate 0.5s ease-in-out;
+
+  @media (min-width: 720px) {
+    background: none;
+    width: auto;
+    height: auto;
+    position: static;
+    flex-flow: row nowrap;
+  }
 `;
 
 export const ListElement = styled.li`
   padding: 2rem 1rem;
   margin: 0 1rem 0 1rem;
   font-size: ${({ theme }) => theme.fontSize.s};
+
+  @media (min-width: 720px) {
+    padding: 10px;
+    margin: 10px;
+    font-size: ${({ theme }) => theme.fontSize.xs};
+  }
 `;
 
 export const StyledLink = styled(NavLink)`

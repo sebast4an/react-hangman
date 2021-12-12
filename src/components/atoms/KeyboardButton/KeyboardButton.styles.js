@@ -9,7 +9,7 @@ export const Button = styled.button`
   background-color: ${({ theme }) => theme.colors.lightBlack};
   border: 0;
   border-radius: 10px;
-  font-size: 1rem;
+  font-size: ${({ theme }) => theme.fontSize.xs};
   text-transform: uppercase;
   display: flex;
   justify-content: center;
@@ -34,5 +34,9 @@ export const Button = styled.button`
 
   &:focus-visible {
     outline: 2px solid ${({ theme }) => theme.colors.white};
+  }
+
+  @media (min-width: 600px) {
+    padding: 18px;
   }
 `;
