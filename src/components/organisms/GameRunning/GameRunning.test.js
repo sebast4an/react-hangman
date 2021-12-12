@@ -11,7 +11,6 @@ describe('GameRunning', () => {
 
   it('Checks game is started', () => {
     renderWithProviders(<GameRunning />);
-
     const button = screen.getByText(/a/i);
     fireEvent.click(button);
     expect(button).toBeDisabled();
