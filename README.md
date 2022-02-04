@@ -13,8 +13,7 @@ It is responsive game project build in React. Data is fetch from SpaceX api usin
 - [x] Ability to surrender (displays a word and stats)
 - [x] Save currenct state (LocalStorage)
 - [x] Disabling the buttons once used
-- [ ] Tests
-- [ ] RWD
+- [x] RWD
 
 ## Technology: 💻
 
@@ -23,7 +22,8 @@ It is responsive game project build in React. Data is fetch from SpaceX api usin
 - StyledCompontents
 - Prettier / ESLint
 - Husky / lint-staged
-- Jest / React Testing Library
+- Jest
+- Atomic Design Methodology
 - Absolute import
 
 ## Using: 💾
