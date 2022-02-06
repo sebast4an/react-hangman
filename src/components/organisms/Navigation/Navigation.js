@@ -10,12 +10,12 @@ const Navigation = () => {
   const list = (
     <List>
       <ListElement>
-        <StyledLink to="/" exact onClick={changeNavState}>
+        <StyledLink to={process.env.REACT_APP_PUBLIC_URL + '/'} exact="true" onClick={changeNavState}>
           Home Page
         </StyledLink>
       </ListElement>
       <ListElement>
-        <StyledLink to="/game" onClick={changeNavState}>
+        <StyledLink to={process.env.REACT_APP_PUBLIC_URL + '/game'} onClick={changeNavState}>
           Start game
         </StyledLink>
       </ListElement>
@@ -34,10 +34,6 @@ const Navigation = () => {
       return isOpen ? list : null;
     }
   };
-
-  window.addEventListener('resize', () => {
-    setIsOpen(true);
-  });
 
   return (
     <Wrapper>

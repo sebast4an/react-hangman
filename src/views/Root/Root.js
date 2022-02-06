@@ -17,9 +17,8 @@ const Root = () => (
         <MainTemplate>
           <GameProvider>
             <Routes>
-              <Route path="/game" element={<Game />} />
-
-              <Route path="/" element={<MainPage />} />
+              <Route path={process.env.REACT_APP_PUBLIC_URL + '/game'} element={<Game />} />
+              <Route path={process.env.REACT_APP_PUBLIC_URL + '/'} element={<MainPage />} />
             </Routes>
           </GameProvider>
         </MainTemplate>

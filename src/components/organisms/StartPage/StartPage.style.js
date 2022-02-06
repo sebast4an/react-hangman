@@ -23,4 +23,3 @@ export const StyledLink = styled(Link)`
     outline: 3px solid ${({ theme }) => theme.colors.grey};
   }
 `;
-
