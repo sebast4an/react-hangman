@@ -1,20 +1,13 @@
 {
   "files": {
-    "main.js": "/react-hangman/static/js/main.0b07e063.chunk.js",
-    "main.js.map": "/react-hangman/static/js/main.0b07e063.chunk.js.map",
-    "runtime-main.js": "/react-hangman/static/js/runtime-main.7c69b335.js",
-    "runtime-main.js.map": "/react-hangman/static/js/runtime-main.7c69b335.js.map",
-    "static/js/2.146ab6da.chunk.js": "/react-hangman/static/js/2.146ab6da.chunk.js",
-    "static/js/2.146ab6da.chunk.js.map": "/react-hangman/static/js/2.146ab6da.chunk.js.map",
+    "main.js": "/react-hangman/static/js/main.3ab7e8ae.js",
+    "static/media/hangman_stages.svg": "/react-hangman/static/media/hangman_stages.a0cb459db6b24e8a698f16013fdd40bd.svg",
+    "static/media/footer.svg": "/react-hangman/static/media/footer.94a6f70ae6a14dbd5d0b45f887808223.svg",
     "index.html": "/react-hangman/index.html",
-    "static/js/2.146ab6da.chunk.js.LICENSE.txt": "/react-hangman/static/js/2.146ab6da.chunk.js.LICENSE.txt",
-    "static/media/footer.94a6f70a.svg": "/react-hangman/static/media/footer.94a6f70a.svg",
-    "static/media/github.1ba3cd4d.svg": "/react-hangman/static/media/github.1ba3cd4d.svg",
-    "static/media/hangman_stages.a0cb459d.svg": "/react-hangman/static/media/hangman_stages.a0cb459d.svg"
+    "static/media/github.svg": "/react-hangman/static/media/github.1ba3cd4d5be2bed39ba9b547b54b1f97.svg",
+    "main.3ab7e8ae.js.map": "/react-hangman/static/js/main.3ab7e8ae.js.map"
   },
   "entrypoints": [
-    "static/js/runtime-main.7c69b335.js",
-    "static/js/2.146ab6da.chunk.js",
-    "static/js/main.0b07e063.chunk.js"
+    "static/js/main.3ab7e8ae.js"
   ]
 }
