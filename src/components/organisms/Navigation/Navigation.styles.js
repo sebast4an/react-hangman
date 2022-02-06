@@ -176,7 +176,7 @@ export const StyledLink = styled(NavLink)`
   text-decoration: none;
   color: ${({ theme }) => theme.colors.grey};
 
-  &.active-link {
+  &.active {
     font-weight: ${({ theme }) => theme.fontWeight.bold};
     color: ${({ theme }) => theme.colors.white};
   }

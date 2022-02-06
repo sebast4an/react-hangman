@@ -4,7 +4,7 @@ import { GlobalStyle } from 'assets/styles/GlobalStyle';
 import { theme } from 'assets/styles/theme';
 import { Wrapper } from './Root.styles';
 import MainTemplate from 'components/templates/MainTemplate';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Game from 'views/Game';
 import MainPage from 'views/MainPage';
 import GameProvider from 'providers/GameProvider';
@@ -15,16 +15,13 @@ const Root = () => (
     <Wrapper>
       <Router>
         <MainTemplate>
-          <Switch>
-            <Route path="/game">
-              <GameProvider>
-                <Game />
-              </GameProvider>
-            </Route>
-            <Route path="/">
-              <MainPage />
-            </Route>
-          </Switch>
+          <GameProvider>
+            <Routes>
+              <Route path="/game" element={<Game />} />
+
+              <Route path="/" element={<MainPage />} />
+            </Routes>
+          </GameProvider>
         </MainTemplate>
       </Router>
     </Wrapper>

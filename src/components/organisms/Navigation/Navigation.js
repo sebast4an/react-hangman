@@ -10,12 +10,12 @@ const Navigation = () => {
   const list = (
     <List>
       <ListElement>
-        <StyledLink to="/" activeClassName="active-link" exact onClick={changeNavState}>
+        <StyledLink to="/" exact onClick={changeNavState}>
           Home Page
         </StyledLink>
       </ListElement>
       <ListElement>
-        <StyledLink to="/game" activeClassName="active-link" onClick={changeNavState}>
+        <StyledLink to="/game" onClick={changeNavState}>
           Start game
         </StyledLink>
       </ListElement>
