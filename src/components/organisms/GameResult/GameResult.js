@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-
+import Widget from 'components/molecules/Widget/Widget';
 import { Title } from 'components/atoms/Title/Title';
 import { StyledList, StyledListElement } from 'components/atoms/StyledList/StyledList';
 import { Line } from 'components/atoms/Line/Line';
@@ -50,6 +50,8 @@ const GameResult = () => {
       <Title>Word:</Title>
       <Paragraph>{fullWordString}</Paragraph>
       <DefaultButton onClick={startGame}>Start new game</DefaultButton>
+      <Widget />
+      [![image](https://img.shields.io/badge/-React%20Router-CA4245?logo=React%20Router&logoColor=white&style=flat-square)](https://github.com/sebast4an)
     </NewGamePanel>
   );
 };
