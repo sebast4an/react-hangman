@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { ClassicLink } from 'components/atoms/ClassicLink/ClassicLink';
+import { Link } from 'react-router-dom';
 import { Wrapper, Nav, Header, HamburgerButton, List, ListElement, StyledLink } from './Navigation.styles';
 
 const Navigation = () => {
@@ -39,7 +40,9 @@ const Navigation = () => {
     <Wrapper>
       <Nav>
         <Header>
-          <h1>Hangman Game</h1>
+          <h1>
+            <Link to={process.env.REACT_APP_PUBLIC_URL + '/'}>Hangman Game</Link>
+          </h1>
         </Header>
         <HamburgerButton isOpen={isOpen} onClick={changeNavState}>
           <div className={'open'} />

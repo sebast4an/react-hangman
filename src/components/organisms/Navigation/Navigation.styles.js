@@ -37,9 +37,15 @@ export const Nav = styled.nav`
 export const Header = styled.header`
   margin: 0 0.7rem;
 
-  h1 {
+  a {
+    text-decoration: none;
+  }
+
+  h1,
+  a {
     font-weight: ${({ theme }) => theme.fontWeight.bold};
     font-size: ${({ theme }) => theme.fontSize.s};
+    color: ${({ theme }) => theme.colors.white};
   }
 
   @media (min-width: 350px) {

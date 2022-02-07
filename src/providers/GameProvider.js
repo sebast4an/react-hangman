@@ -100,7 +100,7 @@ const GameProvider = ({ children }) => {
       isStarted: false,
       result: 1,
     });
-    dispatch(addLosers());
+    dispatch(addLosers(1));
   };
 
   useEffect(() => {
@@ -147,8 +147,9 @@ const GameProvider = ({ children }) => {
           isStarted: false,
           result: 2,
         });
-        dispatch(addWins());
-        localStorage.clear();
+        dispatch(addWins(1));
+        localStorage.removeItem('disabledButtons');
+        localStorage.removeItem('gameState');
       }
       if (gameState.mistakes === 14) {
         setGameState({
@@ -156,8 +157,9 @@ const GameProvider = ({ children }) => {
           isStarted: false,
           result: 3,
         });
-        dispatch(addLosers());
-        localStorage.clear();
+        dispatch(addLosers(1));
+        localStorage.removeItem('disabledButtons');
+        localStorage.removeItem('gameState');
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
