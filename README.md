@@ -17,6 +17,7 @@ It is responsive game project build in React. Data is fetch from SpaceX api usin
 ## Technology: 💻
 
 - React (Context, Router)
+- Redux
 - GraphQL (Axios)
 - StyledCompontents
 - Prettier / ESLint

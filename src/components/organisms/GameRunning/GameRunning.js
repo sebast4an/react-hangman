@@ -6,6 +6,7 @@ import StagePictures from 'components/molecules/StagePictures/StagePictures';
 import { GameContext } from 'providers/GameProvider';
 import { Counters, Hangman, ButtonsWrapper } from './GameRunning.styles';
 import { Button } from 'components/atoms/Button/Button';
+import Widget from 'components/molecules/Widget/Widget';
 
 const GameRunning = () => {
   const {
@@ -34,6 +35,7 @@ const GameRunning = () => {
         <Button onClick={solveGame}>Solve the puzzle</Button>
         <Button onClick={startNewGame}>Restart the game</Button>
       </ButtonsWrapper>
+      <Widget />
     </>
   );
 };
