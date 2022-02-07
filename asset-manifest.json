@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.js": "/react-hangman/static/js/main.1d641b80.js",
+    "main.js": "/react-hangman/static/js/main.0c5840ad.js",
     "static/media/hangman_stages.svg": "/react-hangman/static/media/hangman_stages.a0cb459db6b24e8a698f16013fdd40bd.svg",
     "static/media/footer.svg": "/react-hangman/static/media/footer.94a6f70ae6a14dbd5d0b45f887808223.svg",
     "index.html": "/react-hangman/index.html",
     "static/media/github.svg": "/react-hangman/static/media/github.1ba3cd4d5be2bed39ba9b547b54b1f97.svg",
-    "main.1d641b80.js.map": "/react-hangman/static/js/main.1d641b80.js.map"
+    "main.0c5840ad.js.map": "/react-hangman/static/js/main.0c5840ad.js.map"
   },
   "entrypoints": [
-    "static/js/main.1d641b80.js"
+    "static/js/main.0c5840ad.js"
   ]
 }
