@@ -3,6 +3,7 @@ import { Paragraph } from 'components/atoms/Paragraph/Paragraph';
 import { Title } from 'components/atoms/Title/Title';
 import React from 'react';
 import { StyledLink } from './StartPage.style';
+import Widget from 'components/molecules/Widget/Widget';
 
 const StartPage = () => (
   <>
@@ -20,6 +21,7 @@ const StartPage = () => (
       <StyledListElement>Husky & Lint-staged</StyledListElement>
       <StyledListElement>Default imports</StyledListElement>
     </StyledList>
+    <Widget />
   </>
 );
 

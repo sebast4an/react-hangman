@@ -8,22 +8,26 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Game from 'views/Game';
 import MainPage from 'views/MainPage';
 import GameProvider from 'providers/GameProvider';
+import { Provider } from 'react-redux';
+import { store } from 'store/store';
 
 const Root = () => (
   <ThemeProvider theme={theme}>
-    <GlobalStyle />
-    <Wrapper>
-      <Router>
-        <MainTemplate>
-          <GameProvider>
-            <Routes>
-              <Route path={process.env.REACT_APP_PUBLIC_URL + '/game'} element={<Game />} />
-              <Route path={process.env.REACT_APP_PUBLIC_URL + '/'} element={<MainPage />} />
-            </Routes>
-          </GameProvider>
-        </MainTemplate>
-      </Router>
-    </Wrapper>
+    <Provider store={store}>
+      <GlobalStyle />
+      <Wrapper>
+        <Router>
+          <MainTemplate>
+            <GameProvider>
+              <Routes>
+                <Route path={process.env.REACT_APP_PUBLIC_URL + '/game'} element={<Game />} />
+                <Route path={process.env.REACT_APP_PUBLIC_URL + '/'} element={<MainPage />} />
+              </Routes>
+            </GameProvider>
+          </MainTemplate>
+        </Router>
+      </Wrapper>
+    </Provider>
   </ThemeProvider>
 );
 export default Root;

@@ -3,6 +3,8 @@ import { searchAndReturnInstances, randomNumber } from 'helpers/general';
 import { loadFromLocalStorage, saveInLocalStorage } from 'helpers/localStorage';
 import { spacexAPI } from 'helpers/api';
 import offlineData from 'assets/offlineData.json';
+import { useDispatch } from 'react-redux';
+import { addWins, addLosers } from 'store/store';
 
 export const GameContext = React.createContext({
   startGame: () => {},
@@ -24,6 +26,7 @@ const initialState = {
 const GameProvider = ({ children }) => {
   const [dataState, setDataState] = useState([]);
   const [gameState, setGameState] = useState(initialState);
+  const dispatch = useDispatch();
 
   const returnRandomWord = () => {
     const category = randomNumber(dataState.length - 1);
@@ -97,7 +100,7 @@ const GameProvider = ({ children }) => {
       isStarted: false,
       result: 1,
     });
-    localStorage.clear();
+    dispatch(addLosers());
   };
 
   useEffect(() => {
@@ -144,6 +147,7 @@ const GameProvider = ({ children }) => {
           isStarted: false,
           result: 2,
         });
+        dispatch(addWins());
         localStorage.clear();
       }
       if (gameState.mistakes === 14) {
@@ -152,9 +156,11 @@ const GameProvider = ({ children }) => {
           isStarted: false,
           result: 3,
         });
+        dispatch(addLosers());
         localStorage.clear();
       }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [gameState]);
 
   return (
